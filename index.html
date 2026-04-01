@@ -1,0 +1,2404 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Ôn tập Cấu trúc Dữ liệu & Giải thuật | Thi thử trắc nghiệm</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+        background: #f0f2f8;
+        color: #1e293b;
+        font-size: 14px;
+      }
+      .home-container {
+        max-width: 600px;
+        margin: 80px auto;
+        text-align: center;
+        background: white;
+        border-radius: 32px;
+        padding: 48px 32px;
+        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+      }
+      .home-container h1 {
+        font-size: 2rem;
+        color: #0f2b3d;
+        margin-bottom: 8px;
+      }
+      .mock-badge {
+        background: #eef2ff;
+        display: inline-block;
+        padding: 6px 18px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+      }
+      .info-row {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin: 20px 0;
+      }
+      .info-item {
+        background: #f8fafc;
+        padding: 8px 16px;
+        border-radius: 40px;
+      }
+      .start-btn {
+        background: #1a4a6f;
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 60px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .start-btn:hover {
+        background: #0f3550;
+      }
+
+      .history-summary {
+        margin-top: 40px;
+        text-align: left;
+      }
+      .history-summary h2 {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+      }
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .history-table th,
+      .history-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid #eef2f8;
+      }
+      .history-table th {
+        background-color: #f8fafc;
+        font-weight: 600;
+        color: #475569;
+      }
+      .history-table tbody tr:hover {
+        background-color: #f1f5f9;
+      }
+      .history-table .review-link {
+        color: #1a4a6f;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .history-table .review-link:hover {
+        text-decoration: underline;
+      }
+
+      .exam-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 16px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .main-content {
+        flex: 2;
+        min-width: 280px;
+      }
+      .sidebar {
+        flex: 1;
+        min-width: 260px;
+        background: white;
+        border-radius: 20px;
+        padding: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        height: fit-content;
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        display: flex;
+        flex-direction: column;
+      }
+      .hero {
+        background: linear-gradient(135deg, #0f2b3d 0%, #1a4a6f 100%);
+        border-radius: 20px;
+        padding: 14px 20px;
+        margin-bottom: 20px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        cursor: pointer;
+      }
+      .hero h1 {
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+      .hero p {
+        opacity: 0.85;
+        font-size: 0.75rem;
+      }
+      .timer {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 12px;
+        border-radius: 40px;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+      .result-panel {
+        background: white;
+        border-radius: 20px;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #22c55e;
+        display: none;
+      }
+      .result-panel table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+      }
+      .result-panel td {
+        padding: 6px 8px;
+        border-bottom: 1px solid #eef2f8;
+      }
+      .result-panel td:first-child {
+        font-weight: 600;
+        width: 140px;
+        color: #475569;
+      }
+
+      .question-card {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 16px;
+      }
+      .question-text {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.4;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #eef2f8;
+        white-space: pre-wrap;
+      }
+      .options-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .option-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 40px;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.85rem;
+      }
+      .option-item.selected {
+        background: #e6f7ff;
+        border-color: #1a4a6f;
+      }
+      .option-item.correct-after {
+        background: #dcfce7;
+        border-color: #22c55e;
+      }
+      .option-item.wrong-after {
+        background: #fee2e2;
+        border-color: #ef4444;
+      }
+      .option-prefix {
+        font-weight: 700;
+        width: 28px;
+      }
+      .explanation-area {
+        margin-top: 12px;
+        padding: 10px 16px;
+        border-radius: 16px;
+        font-size: 0.8rem;
+        display: none;
+      }
+      .explanation-area.show {
+        display: block;
+      }
+      .explanation-correct {
+        background: #dcfce7;
+        color: #166534;
+        border-left: 3px solid #22c55e;
+      }
+      .explanation-wrong {
+        background: #fee2e2;
+        color: #991b1b;
+        border-left: 3px solid #ef4444;
+      }
+
+      .nav-bar-bottom {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 12px;
+        gap: 10px;
+      }
+      .nav-buttons {
+        display: flex;
+        gap: 12px;
+      }
+      .nav-btn {
+        background: white;
+        border: 1px solid #e2e8f0;
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: 0.2s;
+      }
+      .nav-btn:hover {
+        background: #f1f5f9;
+      }
+
+      .question-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        max-height: 460px;
+        overflow-y: auto;
+        padding-right: 4px;
+        margin-bottom: 16px;
+      }
+      .q-num {
+        background: #f1f5f9;
+        border-radius: 10px;
+        padding: 8px 0;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.75rem;
+        cursor: pointer;
+      }
+      .q-num.selected {
+        background: #bfdbfe;
+        border: 1px solid #1a4a6f;
+      }
+      .q-num.correct {
+        background: #22c55e;
+        color: white;
+      }
+      .q-num.wrong {
+        background: #ef4444;
+        color: white;
+      }
+      .q-num.current {
+        border: 2px solid #1a4a6f;
+        background: #e6f7ff;
+      }
+
+      .submit-btn {
+        width: 100%;
+        background: #1a4a6f;
+        color: white;
+        padding: 10px;
+        border-radius: 40px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border: none;
+        cursor: pointer;
+        margin-top: 8px;
+      }
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin: 12px 0 8px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .tab-btn {
+        background: none;
+        border: none;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        color: #64748b;
+      }
+      .tab-btn.active {
+        color: #1a4a6f;
+        border-bottom: 2px solid #1a4a6f;
+      }
+      .tab-content {
+        display: none;
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 8px;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .history-item {
+        background: #f8fafc;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.1s;
+      }
+      .history-item:hover {
+        background: #eef2ff;
+      }
+      .history-item .date {
+        font-weight: 600;
+        font-size: 0.8rem;
+      }
+      .history-item .score {
+        font-size: 0.75rem;
+        color: #1a4a6f;
+      }
+      .wrong-item {
+        font-size: 0.75rem;
+        padding: 6px 0;
+        border-bottom: 1px solid #eef2f8;
+        display: flex;
+        justify-content: space-between;
+      }
+      .wrong-item a {
+        color: #1a4a6f;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      @media (max-width: 850px) {
+        .exam-container {
+          flex-direction: column;
+        }
+        .sidebar {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="homePage" class="home-container">
+      <div class="tabs" style="justify-content: center; margin-bottom: 24px">
+        <button class="tab-btn active" data-tab="new-exam">Thi mới</button>
+        <button class="tab-btn" data-tab="history-summary">Lịch sử</button>
+      </div>
+
+      <div id="new-examTab" class="tab-content active">
+        <div class="mock-badge">Thi Thử</div>
+        <h1>Hệ thống ôn tập DSA</h1>
+        <div class="info-row">
+          <div class="info-item">📄 168 câu hỏi</div>
+          <div class="info-item">⏱️ 120 phút</div>
+          <div class="info-item">🎯 Chấm điểm</div>
+        </div>
+        <button class="start-btn" id="startExamBtn">Bắt đầu ngay →</button>
+      </div>
+
+      <div id="history-summaryTab" class="tab-content">
+        <div id="historySummary" class="history-summary">
+          <h2>Tổng kết lần kiểm tra trước đó của bạn:</h2>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Lần làm</th>
+                <th>Trạng thái</th>
+                <th>Điểm / 100,00</th>
+                <th>Xem lại</th>
+              </tr>
+            </thead>
+            <tbody id="historySummaryBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="examPage" style="display: none">
+      <div class="exam-container">
+        <div class="main-content">
+          <div class="hero" id="backToHomeBtn">
+            <div>
+              <h1>📘 ÔN TẬP & KIỂM TRA</h1>
+              <p>Hệ Thống Ôn Tập & Thi • Cấu trúc Dữ liệu & Giải thuật</p>
+            </div>
+            <div class="timer" id="timerDisplay">120:00</div>
+          </div>
+
+          <div id="resultPanel" class="result-panel">
+            <table>
+              <tr>
+                <td>Bắt đầu vào lúc</td>
+                <td id="startTimeStr">-</td>
+              </tr>
+              <tr>
+                <td>Trạng thái</td>
+                <td id="statusStr">Đã kết thúc</td>
+              </tr>
+              <tr>
+                <td>Kết thúc lúc</td>
+                <td id="endTimeStr">-</td>
+              </tr>
+              <tr>
+                <td>Thời gian thực hiện</td>
+                <td id="durationStr">-</td>
+              </tr>
+              <tr>
+                <td>Điểm</td>
+                <td id="scoreDetail">-</td>
+              </tr>
+              <tr>
+                <td>Điểm</td>
+                <td id="scorePercent">-</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="question-card">
+            <div class="question-text" id="questionText">Đang tải...</div>
+            <div class="options-list" id="optionsContainer"></div>
+            <div class="explanation-area" id="explanationArea"></div>
+            <div class="nav-bar-bottom">
+              <div class="nav-buttons">
+                <button class="nav-btn" id="prevBtn">◀ Trước</button>
+                <button class="nav-btn" id="nextBtn">Sau ▶</button>
+                <button
+                  class="nav-btn"
+                  id="submitBtnBottom"
+                  style="display: none; background: #1a4a6f; color: white"
+                >
+                  📥 Nộp bài
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 8px;
+            "
+          >
+            <strong>📋 DANH SÁCH CÂU HỎI</strong>
+            <span
+              id="answeredCounter"
+              style="
+                background: #eef2ff;
+                padding: 2px 8px;
+                border-radius: 20px;
+                font-size: 0.7rem;
+              "
+              >0/0</span
+            >
+          </div>
+          <div id="questionGrid" class="question-grid"></div>
+          <button class="submit-btn" id="submitExamBtn">📥 NỘP BÀI</button>
+
+          <button
+            class="nav-btn"
+            id="goToHomeBtn"
+            style="width: 100%; margin-top: 12px"
+          >
+            Về trang chủ
+          </button>
+          <button
+            class="nav-btn"
+            id="goToHistoryBtn"
+            style="width: 100%; margin-top: 8px"
+          >
+            Lịch sử thi
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ==================== DỮ LIỆU CÂU HỎI (168 câu) ====================
+      // (Đã giữ nguyên 10 câu đầu + 158 câu bạn cung cấp, đủ 168 câu)
+      const questions = [
+        {
+          text: "Cho giải thuật giải bài toán tìm số nhỏ nhất trong ba số như sau:\n- Bước 1. Gán min = a;\n- Bước 2. Nếu b < min thì gán min = b;\n- Bước 3. Nếu c < min thì gán min = c;\nGiải thuật trên được biểu diễn theo cách nào?",
+          options: [
+            "Ngôn ngữ lập trình C++",
+            "Ngôn ngữ tự nhiên",
+            "Sơ đồ khối",
+            "Mã giả",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Phương pháp tinh chỉnh nào được áp dụng khi thiết kế giải thuật?",
+          options: [
+            "Tinh chỉnh đồng loạt",
+            "Tinh chỉnh từ dưới lên",
+            "Tinh chỉnh lần lượt",
+            "Tinh chỉnh từ trên xuống",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Đâu là các đặc trưng của thuật toán?",
+          options: [
+            "Đầu vào, đầu ra, chính xác, vô hạn, đơn trị, tổng quát",
+            "Đầu vào, đầu ra, chính xác, hữu hạn, đa trị, tổng quát",
+            "Đầu vào, đầu ra, chính xác, hữu hạn, đơn trị, tổng quát",
+            "Chính xác, hữu hạn, đơn trị, tổng quát, nhất quán",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Lựa chọn độ phức tạp của thuật toán được thể hiện trong đoạn chương trình sau",
+          image: "Ảnh/image002.png",
+          options: ["O(n)", "O(n²)", "O(nlogn)", "O(1)"],
+          correct: 1,
+        },
+        {
+          text: "Lựa chọn độ phức tạp của thuật toán được thể hiện trong đoạn chương trình sau",
+          image: "Ảnh/image004.png",
+          options: ["O(√n)", "O(1)", "O(n)", "O(logn)"],
+          correct: 2,
+        },
+        {
+          text: "Lựa chọn độ phức tạp của thuật toán được thể hiện trong đoạn chương trình sau",
+          image: "Ảnh/image008.png",
+          options: ["O(n)", "O(n²)", "O(1)", "O(nlogn)"],
+          correct: 1,
+        },
+        {
+          text: "Cho câu lệnh: for i:=1 to m do P(i); thời gian thực hiện vòng lặp For là?",
+          options: ["m + t(i)", "∑_{i=1}^{m} t(i)", "m x t(i)", "m x P(i)"],
+          correct: 1,
+        },
+        {
+          text: "Đâu KHÔNG phải là lợi ích của chiến thuật chia để trị trong thiết kế thuật toán?",
+          options: [
+            "Giảm chi phí phát triển phần mềm",
+            "Hỗ trợ làm việc nhóm",
+            "Lập trình nhanh chóng",
+            "Tăng tính bảo mật thông tin",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Hàm nào sau đây là tiệm cận trên của hàm T(n) = 2n² + 3",
+          options: ["g(n) = n", "g(n) = n²", "g(n) = nlogn", "g(n) = logn"],
+          correct: 1,
+        },
+        {
+          text: "Phát biểu nào sau đây ĐÚNG?",
+          options: [
+            "Nếu thay đổi cấu trúc dữ liệu thì thuật toán cũng thay đổi",
+            "Nếu thay đổi thuật toán thì cấu trúc dữ liệu không đổi",
+            "Nếu thay đổi thuật toán thì cấu trúc dữ liệu thay đổi theo",
+            "Nếu thay đổi cấu trúc dữ liệu thì thuật toán không đổi",
+          ],
+          correct: 0,
+        },
+        {
+          text: " Cho P và Q là hai đoạn thực hiện tuần tự của một chương trình. Time(P) và Time(Q) tương ứng là thời gian thực hiện P và Q. Thời gian thực hiện cả hai đoạn này là?",
+          options: [
+            "Time (P) – Time(Q)",
+            "Min(Time(P); Time(Q))",
+            "Time(P) + Time(Q)",
+            "Time(P)’Time(Q)",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Xác định thời gian tính T(n) cho đoạn chương trình sau:",
+          image: "Ảnh/image012.png",
+          options: ["O(1)", "O(n³)", "O(n)", "O(n²)"],
+          correct: 2,
+        },
+        {
+          text: " Lựa chọn độ phức tạp của thuật toán được thể hiện trong đoạn chương trình sau",
+          image: "Ảnh/image014.png",
+          options: ["O(1)", "O(logn)", "O(n)", "O(n²)"],
+          correct: 2,
+        },
+        {
+          text: " Lựa chọn độ phức tạp của thuật toán được thể hiện trong đoạn chương trình sau",
+          image: "Ảnh/image016.png",
+          options: ["O(n²)", "O(1)", "O(nlogn)", "O(logn)"],
+          correct: 3,
+        },
+        {
+          text: "Xác định thời gian tính T(n) cho đoạn chương trình sau:",
+          image: "Ảnh/image018.png",
+          options: ["n³ + 1", "2n + 1", "3n + 1", "n² + 1"],
+          correct: 2,
+        },
+        {
+          text: "Hàm nào sau đây không phải là tiệm cận dưới của hàm T(n) = 5n + 2",
+          options: ["g(n) = n", "g(n) = 5n", "g(n) = logn", "g(n) = nlogn"],
+          correct: 3,
+        },
+        {
+          text: "Ta cần xác định một hàm của các biến trong vòng lặp sao cho",
+          options: [
+            "Hàm này có giá trị giảm dần trong quá trình lặp",
+            "Hàm này có giá trị tăng dần trong quá trình lặp",
+            "Hàm này có giá trị không đổi trong quá trình lặp",
+            "Tất cả đều sai",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Khi nào nên sử dụng đệ quy có nhớ?",
+          options: [
+            "Khi kích thước dữ liệu đầu vào quá lớn",
+            "Khi kích thước dữ liệu đầu vào quá nhỏ",
+            "Khi cây thực hiện đệ quy có nhiều nhánh",
+            "Khi giải thuật đệ quy có nhiều bài toán con trùng lặp",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Điều kiện dừng của hàm đệ quy sau là gì?",
+          image: "Ảnh/image020.png",
+          options: ["n >= 0", "n = 2", "n = 1", "n < 1"],
+          correct: 3,
+        },
+        {
+          text: "Giải thuật đề quy là:",
+          options: [
+            "Nếu lời giải của một bài toán T được giải bằng lời giải của một bài toán T1 mà T1 giải được thì lời giải có được gọi là lời giải đệ quy.",
+            "Nếu lời giải của của một bài toán T được giải bằng lời giải của một bài toán T1 mà T1 có độ phức tạp khác T, thì lời giải được gọi là lời giải đệ quy.",
+            "Nếu lời giải của một bài toán T được giải bằng lời giải của một bài toán T1, có dạng giống như T, thì lời giải đó được gọi là lời giải đệ quy.",
+            "Nếu lời giải của một bài toán T được giải bằng lời giải của một bài toán T1 khác T, thì lời giải đó được gọi là lời giải đệ quy.",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Điều kiện dừng của hàm đệ quy sau là gì?",
+          image: "Ảnh/image022.png",
+          options: ["3, 2, 1", "1, 2, 3", "1, 2, 3, 0", "3, 2, 1, 0"],
+          correct: 0,
+        },
+        {
+          text: "Cho thuật toán tìm kiếm nhị phân được viết dưới dạng đệ quy.Thời gian tính toán của giải thuật là gì?",
+          image: "Ảnh/image024.png",
+          options: [
+            "T(n) = T(n/2) + n",
+            "T(n) = 2T(n/2) + n",
+            "T(n) = 2T(n/2) + 1",
+            "T(n) = T(n/2) + 1",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Để tính Fact(5), số lần gọi đệ quy để đi đến trường hợp suy biến là bao nhiêu?",
+          image: "Ảnh/image030.png",
+          options: ["5 lần", "3 lần", "6 lần", "4 lần"],
+          correct: 0,
+        },
+        {
+          text: " Hàm đệ quy sau thực hiện việc gì?",
+          image: "Ảnh/image031.png",
+          options: [
+            "Tính số Fibonacci thứ n",
+            "Tính n*(n-1)",
+            "Tính n!",
+            "Tính số cặp thỏ ở tháng thứ n",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Khi xảy ra trường hợp suy biến, giải thuật đệ quy sẽ được thực hiện như thế nào?",
+          options: [
+            "Tiếp tục gọi đệ quy",
+            "Dừng gọi đệ quy và thực hiện giải trực tiếp",
+            "Trả về giá trị 0",
+            " Giải thuật không thể tìm ra lời giải",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Hàm đệ quy sau trả về giá trị nào khi gọi fact(4)",
+          image: "Ảnh/image033.png",
+          options: [
+            "Lặp vô hạn vì không có điều kiện dừng",
+            "Chương trình báo lỗi",
+            "24",
+            "12",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Giải công thức đệ quy sau thu được kết quả nào?",
+          image: "Ảnh/image035.png",
+          options: [
+            "T(n) = O(logn)",
+            "T(n) = O(nlogn)",
+            "T(n) = O(n)",
+            "T(n) = O(n²)",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Đặc điểm nào của giải thuật viết bằng đệ quy là sai trong các đặc điểm sau?",
+          options: [
+            "Sau một số lần gọi đệ quy bài toán có giá trị bằng n",
+            "Sau mỗi lần có lời gọi đệ quy thì kích thước của bài toán được thu nhỏ hơn trước.",
+            " Sau một số lần gọi đệ quy bài toán có giá trị bằng 0.",
+            "Trong thủ tục đệ quy có lời gọi đến chính thủ tục đó.",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Cho giải thuật đệ quy giải bài toán tháp Hà Nội như sau: Khi cột thứ nhất có 2 đĩa thì cần thực hiện bao nhiêu bước chuyển?",
+          image: "Ảnh/image037.png",
+          options: ["11 bước", "7 bước", "9 bước", "3 bước"],
+          correct: 3,
+        },
+        {
+          text: "Đặc điểm của giải thuật đệ quy:",
+          options: [
+            "Có một trường hợp đặc biệt là trường hợp suy biến. Khi trường hợp này xảy ra thì bài toán còn lại sẽ được giải quyết theo một cách khác.",
+            "Trong thủ tục đệ quy có lời gọi đến chính thủ tục đó.",
+            "Tất cả đều đúng.",
+            "Sau mỗi lần có lời gọi đệ quy thì kích thước của bài toán được thu nhỏ hơn trước.",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Để tính Fib(5), quá trình dọi đệ quy sẽ tính Fib(2) bao nhiêu lần?",
+          image: "Ảnh/image039.png",
+          options: ["3 lần", "4 lần", "1 lần", "2 lần"],
+          correct: 0,
+        },
+        {
+          text: "Điều kiện dừng của thủ tục đệ quy sau là gì?",
+          image: "Ảnh/image041.png",
+          options: ["n = 2", "n = 0", "n = 1", "n >= 1"],
+          correct: 1,
+        },
+        {
+          text: "Dãy số Fibonacci bắt nguồn từ bài toán cổ về việc sinh sản của các cặp thỏ. Bài toán được đặt ra như sau : \nCác con thỏ không bao giờ chết. \nHai tháng sau khi ra đời một cặp thỏ mới sẽ sinh ra một cặp thỏ con. \nKhi đã sinh con rồi thì cứ mỗi tháng tiếp theo chúng lại sinh được một cặp con mới. \nGiả sử bắt đầu từ một cặp thỏ mới ra đời thì đến tháng thứ 5 sẽ có bao nhiêu cặp? ",
+          options: ["12 cặp", "9 cặp", "10 cặp", "5 cặp"],
+          correct: 3,
+        },
+        {
+          text: "Nếu n = 0 thì độ phức tạp tính toán của giải thuật đệ quy sau là gì?",
+          image: "Ảnh/image043.png",
+          options: [
+            "T(n) = O(logn)",
+            "T(n) = 1",
+            "T(n) = O(nlogn)",
+            "T(n) = O(n)",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Cho giải thuật đệ quy giải bài toán tháp Hà Nội như sau: \nCần bao nhiêu bước để thực hiện chuyển 3 đĩa từ cột nguồn sang cột đích",
+          image: "Ảnh/image045.png",
+          options: ["5 bước", "7 bước", "3 bước", "11 bước"],
+          correct: 1,
+        },
+        {
+          text: "Khi nào nên sử dụng đệ quy?",
+          options: [
+            "Đòi hỏi sử dụng không gian nhớ và thời gian chạy nhỏ",
+            "Bản thân bài toán có tính chất đệ quy tự nhiên",
+            "Bài toán thuộc lớp NP-khó",
+            "Bài toán có bộ dữ liệu phức tạp",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Giải thuật đệ quy là:",
+          options: [
+            "Trong giải thuật của nó có lời gọi tới một giải thuật khác đã biết kết quả .",
+            "Trong giải thuật của nó có lời gọi tới chính nó nhưng với phạm vi nhỏ hơn.",
+            "Trong giải thuật của nó có lời gọi tới chính nó có phạm vi không đổi",
+            "Trong giải thuật của nó có lời gọi tới chính nó nhưng với phạm vi lớn hơn.",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Độ phức tạp của giải thuật đệ quy có hàm T(n) = T(n-1) + n với T(0) = 1 là gì?",
+          options: [
+            "T(n) = O(nlogn)",
+            "T(n) = O(n2)",
+            "T(n) = O(logn)",
+            "T(n) = O(n)",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Thời gian thực hiện của giải thuật sau tính theo công thức nào?",
+          image: "Ảnh/image047.png",
+          options: [
+            "T(n) = 3",
+            "T(n) = T(n-1) + T(n-2) + 1",
+            "T(n) = T(n-1) * T(n-2) + 1",
+            "T(n) = 2T(n-1) + 1",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Khi đánh giái thuật toán đệ quy bằng DDL thợ, nếu a = b^k thì T(n) = ?",
+          image: "Ảnh/image049.png",
+          options: [
+            "T(n) = Θ(logn)",
+            "T(n) = Θ(n^k)",
+            "T(n) = Θ(n^(log_b a))",
+            "T(n) = Θ(n^k * log n)",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Đâu là phát biểu đúng về việc cài đặt danh sách tuyến tính trên cơ sở con trỏ",
+          options: [
+            "Việc truy cập đến từng phần tử nhanh và đều ngang nhau",
+            "Gây lãng phí bộ nhớ",
+            "Dễ dàng bổ dung hoặc loại bỏ một phần tử khỏi danh sách",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Ưu điểm khi cài đặt danh sách tuyến tính trên cơ sở mảng là gì?",
+          options: [
+            "Không gây lãng phí bộ nhớ",
+            "Dễ truy cập vào từng phần tử và tốc độ truy cập nhanh và đều ngang nhau",
+            "Có thể bổ sung hoặc loại bỏ các phần tử một cách dễ dàng",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Thực hiện lưu trữ danh sách tuyến tính bằng cách nào?",
+          options: [
+            "Chỉ có thể lưu trữ danh sách tuyên stinhs bằng Mảng",
+            "Không thể lưu trữ danh sách tuyến tính trên cơ sở mảng và con trỏ",
+            "Chỉ có thể lưu trữ danh sách tuyến tính trên cơ sở con trỏ",
+            "Có thể lưu trữ danh sách tuyến tính trên cơ sở mảng hoặc con trỏ",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Danh sách khai báo bằng con trỏ. Hàm sau có chức năng gì? \nFunction EList( Header : List) : Boolean; \nbegin \nEList: = (Header= Nil); \nEnd;",
+          options: [
+            "Đưa con trỏ về cuối danh sách.",
+            "Kiểm tra danh sách rỗng.",
+            "Khởi tạo danh sách rỗng.",
+            "Tạo mới một danh sách.",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Khi cài đặt danh sách trên cơ sở con trỏ, thủ tục sau có chức năng gì? \nProdure MnullList ( Var Header : List); \nbegin \nNew (Header); \nHeader : = Nil; \nEnd;",
+          options: [
+            "Thủ tục khởi tạp danh sách rỗng.",
+            "Thủ tục đưa con trỏ vào biến Nil.",
+            "Thủ tục tạo mới danh sách.",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Khi cài đặt danh sách trên cơ sở con trỏ. Thao tác cần thực hiện để xóa nút đầu tiên trong danh sách được trở bởi List là gì?",
+          options: [
+            "Temp=List-> Next;  List = Tempt-> Next;  Delete(Temp);",
+            "Temp=List;  List = List-> Next;  Delete(Temp);",
+            "Temp=List-> Next;  List = List-> Next;  Delete(Temp);",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Khi cài đặt danh sách trên cơ sở con trỏ. Thao tác cần thực hiện để xóa nút Temp vào sau nút Pre là gì?",
+          options: [
+            "Temp=Pre-> Next;   Pre->Next=Temp;    Free(Temp);",
+            "Temp=Pre-> Next;   Pre->Next=Temp->Next;",
+            "Temp=Pre-> Next;   Pre->Next=Temp->Next;    Free(Temp);",
+            "Temp=Pre;  Pre->Next=Temp->Next; Free(Temp);",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Khi chèn một phần tử vào danh sách (cài đặt bằng mảng) yêu cầu cần",
+          options: [
+            "Độ dài danh sách > độ dài của mảng.",
+            "Độ dài của danh sách = độ dài của mảng.",
+            "Độ dài của danh sách có thể tùy ý.",
+            "Độ dài của danh sách < độ dài của mảng.",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Khi bổ sung 1 phần tử vào vị trí thứ p trong danh sách cài đặt trên cơ sở mảng, ta cần",
+          options: [
+            "Dồn tất cả các phần tử trước p về sau 1 vị trí",
+            "Dồn tất cả các phần tử cuối mảng từ vị trí thứ p về sau 1 vị trí",
+            "Dồn tất cả các phần tử trước p về trước 1 vị trí",
+            "Dồn tất cả các phần tử cuối mảng từ vị trí thứ p lên trước 1 vị trí",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Có thể cài đặt danh sách bằng:",
+          options: [
+            "Con trỏ.",
+            "Mảng và con trỏ.",
+            "Mảng .",
+            "Tất cả đều sai.",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Cấu trúc dữ liệu là gì?",
+          options: [
+            "Cấu trúc dữ liệu là các kiểu dữ liệu nguyên thủy",
+            "Cấu trúc dữ liệu là kiểu dữ liệu trừu tượng",
+            "Cấu trúc dữ liệu là kiểu dữ liệu có sẵn trong ngôn ngữ lập trình",
+            " Cấu trúc dữ liệu là sự thể hiện về cách dữ liệu được tổ chức và thao tác",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Trừu tượng hóa dữ liệu là gì?",
+          options: [
+            "Là khi ta muốn sử dụng một kiểu dữ liệu thì ta phải thực hiện cài đặt kiểu dữ liệu đó",
+            "Là khi ta sử dụng một hàm hoặc thủ tục thì ta phải thực hiện cài đặt nó",
+            "Là việc sử dụng một hàm hoặc thủ tục mà chỉ cần biết nó làm được gì và bỏ qua cách nó được cài đặt như thế nào",
+            " Là sự tách biệt các thuộc tính của một kiểu dữ liệu khỏi việc cài đặt kiểu dữ liệu đó",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Để mở rộng một danh sách, ta sử dụng hàm nào?",
+          options: ["extend()", "append()", "insert()", "pop()"],
+          correct: 0,
+        },
+        {
+          text: "Phép toán nào không phải là phép toán của kiểu dữ liệu trừu tượng danh sách tuyến tính?",
+          options: [
+            "insert(pos, value)",
+            "push(value)",
+            "remove(value)",
+            " append(value)",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Thực hiện lưu trữ danh sách tuyến tính bằng cách nào?",
+          options: [
+            "Chỉ có thể lưu trữ danh sách tuyến tính bằng Mảng",
+            "Có thể lưu trữ danh sách tuyến tính trên cơ sở mảng hoặc danh sách liên kết",
+            "Không thể lưu trữ danh sách tuyến tính trên cơ sở mảng và danh sách liên kết",
+            "Chỉ có thể lưu trữ danh sách tuyến tính trên cơ sở danh sách liên kết",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Sau khi thực hiện đoạn lệnh dưới đây với giá trị target = 25 trên danh sách liên kết với head trỏ vào nút đầu danh sách như sau thì preNode trỏ vào nút nào?  curNode = head \npreNode = None \nwhile curNode is not None and curNode.data != target \n\t\tpreNode = curNode \n\t\tcurNode = curNode.next",
+          image: "Ảnh/image051.jpg",
+          options: [
+            " Nút có giá trị 15",
+            "preNode = None",
+            "Nút có giá trị 50",
+            "Nút có giá trị 27",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Cho L là danh sách liên kết với con trỏ head tham chiếu đến nút đầu trong danh sách. Thủ tục sau đây thể hiện công việc gì?",
+          image: "Ảnh/image053.png",
+          options: [
+            "Sắp xếp có giá trị 15",
+            "Tìm kiếm trong danh sách đã được sắp xếp",
+            "Tìm kiếm trong danh sách chưa được sắp xếp",
+            "Xóa phần tử trong danh sách",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Khi cần bổ sung một nút mới vào vị trí thứ p trong danh sách liên kết thì ta cần biết địa chỉ của nút nào?",
+          options: [
+            "Nút thứ p - 1",
+            "Nút thứ p",
+            "Nút thứ p + 1",
+            "Nút thứ p -2 ",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Một đối tượng danh sách tuyến tính List được cài đặt như sau gồm những thông tin gì?",
+          image: "Ảnh/image055.jpg",
+          options: [
+            "Gồm 3 trường: trường head và tail lưu dữ liệu và trường len lưu số phần tử trong danh sách",
+            "Gồm 2 trường: trường data lưu dữ liệu và trường next lưu địa chỉ cả nút tiếp theo",
+            "Gồm 2 trường: trường head trỏ đến nút đầu tiên trong danh sách và trường len lưu số phần tử của danh sách",
+            " Gồm 3 trường: trường head trỏ đến nút đầu tiên trong danh sách, trường tail trỏ đến nút cuối cùng trong danh sách và trường len lưu số phần tử của danh sách",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Điền vào các chỗ trống để thu được thủ tục thực hiện xóa một nút có giá trị target trên danh sách với nút đầu được tham chiếu bởi head: def Delete(self, target): \n\t\t\tprevnode = None  \n\t\t\t curnode = head  \n\t\t\twhile ... is not None and curnode.data != target: \n\t\t\t\t\t\tprevnode = curnode  \n\t\t\t\t\t\tcurnode = ... .next  \n\t\t\tif curnode is not None:  \n\t\t\t\t\t\t if curnode is ... :   \n\t\t\t\t\t\t\t\thead = curnode.next   \n\t\t\t\t\t\telse:  ... .next = curnode.next",
+          options: [
+            "curNode, prevNode, None, prevNode",
+            "None, prevNode, prevNode, curNode",
+            "curNode, prevNode, PrevNode, None",
+            "curNode, curNode, None, prevNode",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Cài đặt danh sách bằng mảng có nghĩa là",
+          options: [
+            "Tất cả đều đúng",
+            "Dùng bản ghi có hai thành phần để lưu trữ các phần tử của danh sách",
+            "Dùng biến con trỏ lưu trữ các phần tử của danh sách",
+            "Dùng một mảng (array) để lưu trữ liên tiếp các phần tử của danh sách bắt đầu từ vị trí đầu tiên của mảng",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Khi cài đặt danh sách trên cơ sở con trỏ. Thao tác cần thực hiện để chèn nút Temp vào sau nút Pre là gì?",
+          options: [
+            "Temp->Next= Pre;  Pre->Next=Temp;",
+            "Pre->Next=Temp;  Temp->Next= Pre->Next;",
+            "Temp->Next=Pre->Next;   Pre->Next=Temp;",
+            "Temp->Next= Pre->Next;  Pre->Next=Temp->next;",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Khi xóa 1 phần tử ở vị trí thứ p trong danh sách cài đặt trên cơ sở mảng, ta cần",
+          options: [
+            "Dồn tất cả các phần tử cuối mảng từ vị trí thứ p về sau 1 vị trí",
+            "Dồn tất cả các phần tử cuối mảng từ vị trí thứ p về trước 1 vị trí",
+            "Dồn tất cả các phần tử trước p về sau 1 vị trí",
+            "Dồn tất cả các phần tử trước p về trước 1 vị trí",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Cài đặt danh sách bằng con trỏ có nghĩa là:",
+          options: [
+            "Dùng con trỏ quản lí các phần tử của mảng theo phương thức bất kì. Để một phần tử có thể chỉ đến một phần tử khác ta xem ô là một Record gồm 2 trường: Trường Elements để giữ nội dung của phần tử trong dánh sách. Trường Next là một con trỏ giữ địa chỉ của ô kế tiếp.",
+            "Dùng con trỏ để liên kết các phần tử của danh sách theo phương thức ai chỉ đến ai + 1. Để một phần tử có thể chỉ đến một phần tử khác ta xem mỗi ô là một Record gồm có 2 trường: Trường Elements để giữ nội dung của phần tử trong danh sách. Trường Next là một con trỏ giữ địa chỉ của ô kế tiếp.",
+            "Dùng biến con trỏ lưu trữ các phần tử của danh sách",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Trong cài đặt danh sách bằng mảng, thủ tục sau thực hiện việc gì? \nProcedure MlList ( L : List); \nbegin \nL.Last : = 0; \nEnd;",
+          options: [
+            "Tất cả đều sai",
+            "Thủ tục khởi tạo danh sách rỗng",
+            "Thủ tục kiểm tra danh sách rỗng",
+            "Thủ tục chèn thêm một giá trị bằng 0 vào danh sách một mảng (array) để lưu trữ liên tiếp các phần tử của danh sách bắt đầu từ vị trí đầu tiên của mảng",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Trong khi sử dụng cấu trúc dữ liệu dạng danh sách  \nHàm sau có chức năng gì?  \nFunction Flist ( L : List ) : Boolean; \nbegin \nFlist : = ( L.Last > = Maxlenght ); \nEnd;",
+          options: [
+            "Tất cả đều sai",
+            "Kiểm tra danh sách rỗng",
+            "Khởi tạo danh sách có giá trị cuối bằng không",
+            "Kiểm tra danh sách đầy",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Định nghĩa cấu trúc dữ liệu dạng Danh sách(LIST)",
+          options: [
+            "Danh sách là kiểu dữ liệu mảng",
+            "Danh sách là kiểu con trỏ",
+            "Danh sách là một tập hợp các phần tử có cùng một kiểu mà ta gọi là kiểu phần tử (ElementType) và số lượng các phần tử có sự thay đổi",
+            "Danh sách là Tập hợp các phần tử khác kiểu.",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Khi cài đặt danh sách trên cơ sở con trỏ. Thao tác cần thực hiện để chèn một nút mới (Temp) vào đầu danh sách được trỏ bởi List là gì?",
+          options: [
+            "Temp->next=List;   List=Temp->next;",
+            "Temp->List;   List=Temp;",
+            "Temp->next=List;   List=Temp;",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Tính chất quan trọng của dánh sách:",
+          options: [
+            "Tất cả đều sai.",
+            "Các phần tử của danh sách có thứ tự tuyên stinhs theo vị trị xuất hiện của chúng(position)",
+            "Các phần tử của danh sách không theo thứ tự",
+            "Các phần tử của danh sách có thể truy nhập ngẫu nhiên",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Danh sách tuyến tính dạng ngăn xếp là:",
+          options: [
+            "Là một danh sách tuyến tính trong đó phép bổ sung một phần tử vào ngăn xếp được thực hiện ở một đầu, và phép loại bỏ được thực hiện ở đầu kia.",
+            "Là một danh sách tuyến tính trong đó phép bổ sung một phần tử vào ngăn xếp và phép loại bỏ một phần tử khỏi ngăn xếp luôn luôn thực hiện ở một đầu gọi là đỉnh.",
+            "Là một danh sách tuyến tính trong đó phép bổ sung một phần tử vào ngăn xếp và phép loại bỏ một phần tử khỏi ngăn xếp luôn luôn thực hiện ở tại một vị trí bất kì trong danh sách.",
+            "Là một dánh ách tuyến tính trong đó phép bổ sung một phần tử vào ngăn xếp được thực hiện ở một đầu, và phép loại bỏ không thực hiện được.",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Định nghĩa danh sách tuyến tính Hàng đợi (Queue)",
+          options: [
+            "Hàng đợi là kiểu danh sách tuyến tính trong đó, phép bổ sung một phần tử được thực hiện ở một đầu, gọi là lối sau (back) hay lối trước (front). Phép loại bỏ không thực hiện được. cả đều đúng",
+            "Hàng đợi là kiểu danh sách tuyến tính trong đó, phép bổ sung phần tử ở một đầu, gọi là lối sau (back) và phép loại bỏ phần tử được thực hiện ở đầu kia, gọi là lối trước (front)",
+            "Là một danh sách tuyến tính trong đó phép bổ sung một phần tử và phép loại bỏ một phần tử được thực hiện ở tại một vị trí bất kì trong danh sách.",
+            "Hàng đợi là kiểu danh sách tuyến tính trong đó, phép bổ sung một phần tử hay loại bỏ được thực hiện ở một đầu dánh ách gọi là đỉnh (Top)",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Hàng đợi là kiểu danh sách tuyến tính trong đó, phép bổ sung một phần tử hay loại bỏ được thực hiện ở một đầu dánh ách gọi là đỉnh (Top)",
+          options: ["EMPTY()", "POP()", "PUSH()", "FULL()"],
+          correct: 1,
+        },
+        {
+          text: "Thao tác Push(x) dùng trong Stack là để:",
+          options: [
+            "Bổ sung một phần tử vào đáy Stack",
+            "Bổ sung một dãy các phần tử vào đỉnh Stack",
+            "Bổ sung một phần tử vào đỉnh Stack",
+            "Bổ sung một phần tử bất kì vào Stack",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Khi cài đặt hàng đợi bằng mảng, giả sử F trỏ tới lối trước của hàng đợi, R trỏ tới lối sau của hàng đợi. Khi thêm một phần tử vào hàng đợi, thì R và F thay đổi thế nào?",
+          options: [
+            "F=F+1, R không thay đổi",
+            "F không thay đổi, R=R-1",
+            "F=F-1, R không thay đổi",
+            "F không thay đổi, R=R+1",
+          ],
+          correct: 3,
+        },
+        {
+          text: "S là ngăn xếp, Phép toán thêm phần tử vào ngăn xếp là Push(), pháp lấy ra một phần tử từ ngăn xếp là POP(), thủ tục sau làm nhiệm vụ gì? \nProcedure Chuyen_doi(N); \nS=Stack() \nWhile N <> 0 do \nR := N mod 2; \nS.PUSH(R) \nN := N div 2; \nend; \nWhile not Empty(S) do \nBegin \nS.POP(R) \nwrite(R); \nend \nend.",
+          options: [
+            "Ứng dụng ngăn xếp để thay N bằng thương của phép chia N cho 2",
+            "Ứng dụng ngăn xếp để tính số dư trong phép chia N cho 2",
+            "Ứng dụng ngăn xếp để đổi số N từ cơ số 10 sang cơ số 2",
+            "Ứng dụng ngăn xếp để Đưa giá trị N vào ngăn xếp và lấy ra giá trị N",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Nếu nội dung của Stack gồm các phần tử theo thứ tự “1 1 0 1” thì các phần tử được loại khỏi Stack theo thứ tự nào?",
+          options: ["1, 1, 1, 0", "0, 1, 1, 1", "1, 1, 0, 1", "1, 0, 1, 1"],
+          correct: 3,
+        },
+        {
+          text: "Thao tác POP() dùng trong Stack là để:",
+          options: [
+            "Lấy một phần tử cuối cùng ra khỏi đỉnh Stack",
+            "Xóa bỏ môt phần tử bất kì khỏi Stack",
+            "Xóa bỏ một dãy các phần tử ra khỏi Stack",
+            "Lấy phần tử đầu tiên ra khỏi Stack",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Để thêm một đối tượng x bất kì vào Stack, thao tác thường dùng là:",
+          options: ["TOP(x)", "PUSH(x)", "EMPTY(x)", "POP(x)"],
+          correct: 1,
+        },
+        {
+          text: "Khi cài đặt hàng đợi bằng mảng, giải sử F trỏ tới lối trước của hàng đợi, R trỏ tới lối sau của hàng đợi. Khi loại bỏ một phần tử vào Queue, thì R và F thay đổi thế nào?",
+          options: [
+            "F không thay đổi, R=R-1",
+            "F không thay đổi, R=R+1",
+            "F=F-1, R không thay đổi",
+            "F=F+1, R không thay đổi",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Khi cài đặt hàng đợi dưới dạng mảng nối vòng, giả sử F trỏ tới lối trước của hàng đợi, R trỏ tới lối sau của hàng đợi. Điều kiện F=R=1 nghĩa là:",
+          options: [
+            "Kiểm tra chỉ số trước và chỉ số sau của Queue có bằng nhau không",
+            "Queue tràn",
+            "Queue rỗng",
+            "Queue có một phần tử",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Khi đổi một số nguyên từ hệ thập phân sang hệ nhị phân thì người ta dùng phép chia liên tiếp cho 2 và lấy các số dư (là các chữ số nhị phân) theo chiều ngược lại. \nCơ chế sắp xếp này chính là cơ chế hoạt động của cấu trúc dữ liệu:",
+          options: [
+            "Bản ghi (Record)",
+            "Hàng đợi (Queue)",
+            "Mảng (array)",
+            "Ngăn xếp (stack)",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Danh sách tuyến tính dạng ngăn xếp làm việc theo nguyên tắc:",
+          options: [
+            "LIFO (last in first out)",
+            "FOLO (first out last out)",
+            "LILO (last in last out)",
+            "FIFO (first int first out)",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Để xóa nút có giá trị 27 ta cần biết địa chỉ của nút nào",
+          image: "Ảnh/image057.png",
+          options: [
+            "Nút có giá trị 27",
+            "Nút có giá trị 35",
+            "Nút có giá trị 27 và 35",
+            "Nút có giá trị 63",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Phép toán delete(value) của danh sách tuyến tính thực hiện việc gì?",
+          options: [
+            "Xóa phần tử ở cuối danh sách",
+            "Thêm phần tử có giá trị value vào vị trí pos trong dánh sách",
+            "Xóa phần tử có giá trị value trong danh sách",
+            "Thêm phần tử có giá trị value vào danh sách",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Trừu tượng hóa thủ tục là gì?",
+          options: [
+            "Là khi ta muốn sử dụng một kiểu dữ liệu thì ta phải thực hiện cài đặt kiểu dữ liệu đó",
+            "Là sự tách biệt các thuộc tính của một kiểu dữ liệu khỏi việc cài đặt kiểu dữ liệu đó",
+            "Là khi ta sử dụng một hàm hoặc thủ tục thì ta phải thực hiện cài đặt nó",
+            "Là việc sử dụng một hàm hoặc thủ tục mà chỉ cần biết nó làm được gì và bỏ qua cách nó được cài đặt như thế nào",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Cài đặt danh sách liên kết là:",
+          options: [
+            "Dùng một mảng (array) để lưu trữ liên kết các phần tử của danh sách bắt đầu từ vị trí đầu tiên của mảng",
+            "Danh sách gồm nhiều nút liên kết với nhau. Mỗi nút của danh sách gồm 2 trường: Trường Data để lưu giá trị phần tử trong danh sách, trường Next lưu địa chỉ của tất cả các nút trong danh sách",
+            "Danh sách gồm nhiều nút liên kết với nhau. Mỗi nút của danh sách gồm 2 trường: Trường Data để lưu giá trị phần tử trong danh sách, trường Next lưu địa chỉ của nút tiếp theo trong danh sách",
+            "Dùng một mảng (array) để lưu trữ liên kết các phần tử của danh sách bắt đầu từ vị trí đầu tiên của mảng. Mỗi phần tử của mảng gồm 2 trường: Trường Elements để giữ nội dung của phần tử trong danh sách. Trường Next là một con trỏ giữ địa chỉ của ô kế tiếp.",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Để loại bỏ các phần tử trong danh sách, ta sử dụng hàm nào?",
+          options: ["insert()", "extend()", "append()", "delete()"],
+          correct: 3,
+        },
+        {
+          text: "Cho L là danh sách liên kết có các giá trị được sắp xếp tăng dần, trong đó head là con trỏ tham chiếu đến nút đầu trong danh sách. Sau khi kết thúc đoạn lệnh sau, curNode trỏ đến nút nào?",
+          image: "Ảnh/image065.png",
+          options: [
+            "Nút đầu tiên trong danh sách có giá trị lớn hơn hoặc bằng giá trị value",
+            "Nút có giá trị nhỏ hơn giá trị value",
+            "Nút có giá trị nhỏ hơn hoặc bằng giá trị value",
+            "Nút có giá trị bằng giá trị value",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Cho L là danh sách liên kết với con trỏ head tham chiếu đến nút đầu trong danh sách. Sau khi thực hiện xong đoạn lệnh sau, con trỏ preNode tham chiếu đến nút nào?",
+          image: "Ảnh/image063.jpg",
+          options: [
+            "Nút có giá trị target",
+            "Nút đầu tiên trong danh sách",
+            "Nút ngay sau nút có giá trị target",
+            "Nút ngay trước nút có giá trị target",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Ưu điểm khi sử dụng danh sách liên kết có tham chiếu đuôi là gì?",
+          options: [
+            "Việc bổ sung một phần tử vào đầu danh sách thực hiện nhanh hơn so với danh sách chỉ có tham chiếu đầu",
+            "Việc loại bỏ một phần tử ở cuối danh sách thực hiện nhanh hơn so với danh sách chỉ có tham chiếu đầu",
+            "Việc bổ sung một phần tử vào cuối danh sách thực hiện nhanh hơn so với danh sách chỉ có tham chiếu đầu",
+            "Tiết kiệm bộ nhớ hơn so với danh sách chỉ có tham chiếu đầu",
+          ],
+          correct: 2,
+        },
+        {
+          text: " Phép toán nào không phải là pháp toán của kiểu dữ liệu trừu tượng danh sách tuyến tính?",
+          options: [
+            "push(value)",
+            "remove(value)",
+            "append(value)",
+            "insert(pos, value)",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Kiểu dữ liệu là gì?",
+          options: [
+            "Là tập hợp các giá trị và tập hợp các phép toán có thể thực hiện trên các giá trị bất kì",
+            "Là một tập hợp các giá trị số nguyên hoặc số thực",
+            "Là tập hợp các phép toán có thể thực hiện trên các giá trị số nguyên hoặc số thực",
+            "Là tập hợp các giá trị và tập hợp các phép toán có thể thực hiện trên tất cả các giá trị đó",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Cho L là danh sách liên kết với con trỏ head tham chiếu đến nút đầu trong danh sách. Sau khi thực hiện xong đoạn lệnh sau, con trỏ preNode tham chiếu đến nút nào? \npreNode = None \ncurNode = head \nwhile curNode is not None and curNode.data < value: \n\t\tpreNode = curNode \n\t\t curNode = curNode.next",
+          image: "Ảnh/image065.png",
+          options: [
+            "Nút đầu tiên trong danh sách có giá trị lớn hơn hoặc bằng giá trị value",
+            "Nút có giá trị nhỏ hơn giá trị value",
+            "Nút có giá trị nhỏ hơn hoặc bằng giá trị value",
+            "Nút có giá trị bằng giá trị value",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Kết quả của việc thực hiện đoạn lệnh với giá trị item = 37 trên danh sách sau là gì? \nnewNode = ListNode (item) \nif head is None: \n\t\thead = newNode \nelse: \n\t\ttail.next = newNode \ntail = newNode",
+          image: "Ảnh/image067.jpg",
+          options: [
+            "Chèn nút mới có giá trị 37 vào đầu danh sách",
+            "Chèn nút mới có giá trị 37 vào cuối danh sách",
+            "Chèn nút mới có giá trị 37 vào sau nút có giá trị 35 trong danh sách",
+            "Chèn nút mới có giá trị 37 vào trước nút cuối cùng trong danh sách",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Cho L là danh sách liên kết có các giá trị được sắp xếp tăng dần trong đó head là con trỏ trỏ đến nút đầu trong danh sách. \nĐoạn lệnh sau thực hiện việc gì?",
+          image: "Ảnh/image069.jpg",
+          options: [
+            "Thêm nút có giá trị value vào danh sách sao cho danh sách vẫn được sắp xếp giảm dần",
+            "Thêm nút có giá trị value vào danh sách sao cho danh sách vẫn được sắp xếp tăng dần",
+            "Tìm nút có giá trị value trong danh sách",
+            "Xóa nút có giá trị value trong danh sách",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Đâu là phát biểu đúng về kiểu dữ liệu trừu tượng mảng",
+          options: [
+            "Số phần tử của mảng biến động",
+            "Có thể thêm phần tử vào mảng",
+            "Mảng là tập hợp các phần tử được sắp xếp tuyến tính",
+            " Mảng là tập hợp các phần tử được liên kết với nhau",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Cho L là danh sách liên kết với head tham chiếu đến đầu danh sách. preNode là con trỏ tham chiếu đến một nút trong danh sách. Để thêm nút mới newNode vào sau preNode thì các thao tác cần thực hiện là gì?",
+          options: [
+            "newNode.next=preNode.next;   preNode.next=newNode",
+            "preNode.next=newNode;   newNode.next=preNode.next",
+            "preNode=newNode.next;   newNode =preNode.next",
+            "newNode.next=curNode;   curNode.next=newNode",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Khi thực hiện tìm kiếm một giá trị target ttrong danh sách liên kết đã được sắp xếp tăng dần, phát biểu nào sau đây ĐÚNG?",
+          options: [
+            "Quá trình tìm kiếm dừng lại khi gặp một nút có giá trị lớn hơn hoặc bằng giá trị cần tìm hoặc đã tìm đến nút cuối cùng mà không có giá trị cần tìm.",
+            "Quá trình tìm kiếm dừng lại khi gặp một nút có giá trị nhỏ hơn giá trị cần tìm hoặc đã tìm đến nút cuối cùng mà không có giá trị cần tìm.",
+            "Quá trình tìm kiếm dừng lại khi gặp một nút có giá trị nhỏ hơn giá trị cần tìm.",
+            "Quá trình tìm kiếm dừng lại khi gặp một nút có giá trị lớn hơn hoặc bằng giá trị cần tìm.",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Cho L là danh sách liên kết có các giá trị được sắp xếp tăng dần, trong đó head là con trỏ tham chiếu đến nút đầu trong danh sách. Sau khi kết thúc đoạn lệnh sau với value = 17, curNode trỏ đến nút nào? \npreNode = None \ncurNode = head \nwhile curNode is not None and curNode.data < value: \n\t\tpreNode = curNode \n\t\tcurNode = curNode.next",
+          image: "Ảnh/image071.jpg",
+          options: [
+            "Nút có giá trị 6",
+            "curNode = None",
+            "Nút có giá trị 29",
+            "Nút có giá trị 15",
+          ],
+          correct: 2,
+        },
+        {
+          text: " Cho L là danh sách liên kết với con trỏ head tham chiếu đến nút đầu trong danh sách. Thủ tục sau thực hiện việc gì?",
+          image: "Ảnh/image073.jpg",
+          options: [
+            "Tìm và xóa nút có giá trị target danh sách",
+            "Duyệt danh sách",
+            "Tìm nút cuối của danh sách",
+            "Tìm nút có giá trị target trong danh sách",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Để thêm các phần tử trong danh sách, ta sử dụng hàm nào?",
+          options: ["insert()", "extend()", "append()", "pop()"],
+          correct: 0,
+        },
+        {
+          text: "Khi cài đặt ngăn xếp trên cơ sở danh sách liên kết với nút đầu danh sách liên kết là đỉnh ngăn xếp. Phép toán getTop() thực hiện việc gì?",
+          options: [
+            "Trả về trường dữ liệu của nút đầu tiên trong danh sách liên kết",
+            "Trả về địa chỉ của nút đầu tiên trong danh sách liên kết",
+            "Thêm một nút mới vào đầu danh sách",
+            "Xóa nút đầu tiên của danh sách",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Hàng đợi là gì?",
+          options: [
+            "Hàng đợi là kiểu danh sách tuyến tính trong đó, phép bổ sung một phần tử được thực hiện ở một đầu, gọi là lối sau (back) hay lối trước (front). Phép loại bỏ không thực hiện được.",
+            "Hàng đợi là kiểu danh sách tuyến tính trong đó, phép bổ sung phần tử ở một đầu, gọi là lối sau (back) và phép loại bỏ phần tử được thực hiện ở đầu kia, gọi là lối trước (front)",
+            "Là một danh sách tuyến tính trong đó phép bổ sung một phần tử và phép loại bỏ một phần tử được thực hiện ở tại một vị trí bất kì trong danh sách.",
+            "Hàng đợi là kiểu danh sách tuyến tính trong đó, phép bổ sung một phần tử hay loại bỏ được thực hiện ở một đầu dánh ách gọi là đỉnh (Top)",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Khi cài đặt ngăn xếp sử dụng kiểu List trong Python với đỉnh ngăn xếp là đuôi danh sách. Để cài đặt phép toán pop() của ngăn xếp, ta cần gọi đến thao tác nào của kiểu List?",
+          options: ["delete()", "append()", "pop()", "remove()"],
+          correct: 2,
+        },
+        {
+          text: "Khi cài đặt hàng đợi bằng danh sách liên kết, trong đó đầu danh sách tương ứng với đầu hàng đợi và đuôi danh sách tương ứng với đuôi hàng đợi. Để cài đặt phép toán enqueue(x) ta thực hiện thao tác nào?",
+          options: [
+            "Xóa nút đầu tiên trong danh sách liên kết",
+            "Thêm một nút mới có giá trị x vào cuối danh sách liên kết",
+            "Xóa nút cuối cùng trong danh sách liên kết",
+            "Thêm một nút mới có giá trị x vào đầu danh sách liên kết",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Kết quả của việc thực hiện phép toán pop() trên ngăn xếp sau là gì?",
+          image: "Ảnh/image075.jpg",
+          options: [
+            "Thêm nút mới vào cuối danh sách",
+            "Xóa nút có giá trị 31 khỏi danh sách",
+            "Xóa nút có giá trị 17 khỏi danh sách",
+            "Thêm nút mới vào đầu danh sách",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Khi cài đặt hàng đợi bằng mảng vòng, các phần tử của hàng đợi được lưu trong mảng _queueArray, _font và _back là các điểm đánh đấu phần tử đầu tiên và phần tử cuối cung của hàng đợi trong mảng. Đoạn lệnh sau thực hiện việc gì?",
+          image: "Ảnh/image077.jpg",
+          options: [
+            "Loại bỏ và trả về giá trị của phần tử đầu hàng đợi",
+            "Thêm một phần tử có giá trị item vào đầu hàng đợi",
+            "Loại bỏ và trả về giá trị của phần tử cuối hàng đợi",
+            "Thêm một phần tử có giá trị item vào cuối hàng đợi",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Khi cài đặt hàng đợi trên cơ sở danh sách liên kết, _queueHead và _queueTail là hai con trỏ trỏ tới nút đầu tiên và nút cuối cùng trong danh sách. Đoạn lệnh sau thực hiện việc gì?",
+          image: "Ảnh/image079.png",
+          options: [
+            "Loại bỏ và trả về giá trị của phần tử đầu hàng đợi",
+            "Thêm một phần tử có giá trị x vào cuối hàng đợi",
+            "Loại bỏ và trả về giá trị của phần tử cuối hàng đợi",
+            "Thêm một phần tử có giá trị x vào đầu hàng đợi",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Sau khi thực hiện đoạn lệnh sau, nội dung hàng đợi là gì?",
+          image: "Ảnh/image081.png",
+          options: [
+            "Hàng đợi rỗng",
+            "0, 3, 4, 6, 8, 9, 12, 15, 16",
+            "0, 9, 12, 15",
+            "0, 3, 6, 9, 12, 15",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Phát biểu nào sau đây đúng về việc cài đặt hàng đợi bằng mảng vòng",
+          options: [
+            "Dung lượng hàng đợi bị giới hạn",
+            "Cài đặt phức tạp",
+            "Các thao tác thực hiện trong thời gian tuyến tính với số phần tử của hàng đợi",
+            "Phần tử đầu hàng đợi luôn ở vị trí đầu tiên của mảng",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Ngăn xếp là gì?",
+          options: [
+            "Là một danh sách tuyến tính trong đó phép bổ sung một phần tử vào ngăn xếp được thực hiện ở một đầu, và phép loại bỏ được thực hiện ở đầu kia.",
+            "Là một danh sách tuyến tính trong đó phép bổ sung một phần tử vào ngăn xếp và phép loại bỏ một phần tử khỏi ngăn xếp luôn luôn thực hiện ở một đầu gọi là đỉnh.",
+            "Là một danh sách tuyến tính trong đó phép bổ sung một phần tử vào ngăn xếp và phép loại bỏ một phần tử khỏi ngăn xếp luôn luôn thực hiện ở tại một vị trí bất kì trong danh sách.",
+            "Là một dánh ách tuyến tính trong đó phép bổ sung một phần tử vào ngăn xếp được thực hiện ở một đầu, và phép loại bỏ không thực hiện được.",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Khi cài đặt ngăn xếp trên cơ sở danh sách liên kết với nút đầu danh sách liên kết là đỉnh ngăn xếp. Phép toán push(x) thực hiện việc gì?",
+          options: [
+            "Xóa nút đầu trong danh sách liên kết",
+            "Xóa nút cuối trong danh sách liên kết",
+            "Thêm một nút có trường dữ liệu x vào cuối danh sách",
+            "Thêm một nút có trường dữ liệu x vào đầu danh sách",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Thao tác nào thực trả về phần tử ở đầu hàng đợi mà không thay đổi nội dung hàng đợi?",
+          options: ["getTop()", "getHead()", "dequeue(x)", "enqueue()"],
+          correct: 1,
+        },
+        {
+          text: "Nếu đọc từng kí tự của chuỗi “1101” và đưa vào ngăn xếp thì các phần tử được loại bỏ khỏi ngăn xếp theo thứ tự nào?",
+          options: ["0, 1, 1, 1", "1, 0, 1, 1", "1, 1, 0, 1", "1, 1, 1, 0"],
+          correct: 1,
+        },
+        {
+          text: "Sau khi thực hiện đoạn lệnh sau, nội dung ngăn xếp là gì? (các phần tử liệt kê từ đáy)",
+          image: "Ảnh/image083.png",
+          options: [
+            "0, 3, 6, 9, 12, 15",
+            "Ngăn xếp rỗng",
+            "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15",
+            "3, 6, 9, 12, 15",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Khi cài đặt hàng đợi bằng mảng vòng lưu trữ được tối đa m phần tử, front và back tương ứng lưu vị trí của phần tử đầu hàng đợi và phần tử cuối hàng đợi. Nếu hàng đợi chưa đầy và thực hiện thêm một phần tử vào hàng đợi thì các giá trị front và back thay đổi như thế nào?",
+          options: [
+            "front = front + 1; back không thay đổi",
+            "front = (front + 1) % m; back không thay đổi",
+            "front không thay đổi; back = (back + 1) % m",
+            "front không thay đổi; back = back + 1",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Khi cài đặt ngăn xếp trên cơ sở danh sách liên kết với _top là con trỏ đên snuts đầu tiên trong danh sách - đỉnh của ngăn xếp. Đoạn lệnh sau thực hiện việc gì?",
+          image: "Ảnh/image085.jpg",
+          options: [
+            "Trả về số phần tử của ngăn xếp",
+            "Thêm một phần tử có giá trị item vào đỉnh ngăn xếp",
+            "Loại bỏ và trả về giá trị ở đỉnh của ngăn xếp",
+            "Trả về giá trị ở đỉnh của ngăn xếp nhưng không làm thay đổi nội dung ngăn xếp",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Thao tác nào thực hiện thêm một phần tử có giá trị x vào ngăn xếp?",
+          options: ["push(x)", "pop(x)", "isEmpty(x)", "getTop(x)"],
+          correct: 0,
+        },
+        {
+          text: "Khi cài đặt ngăn xếp trên cơ sở danh sách liên kết với _top là con trỏ đên snuts đầu tiên trong danh sách - đỉnh của ngăn xếp. Đoạn lệnh sau thực hiện việc gì?",
+          image: "Ảnh/image087.png",
+          options: [
+            "Loại bỏ và trả về phần tử ở đỉnh ngăn xếp",
+            "Kiểm tra ngăn xếp rỗng",
+            "Trả về số phần tử của ngăn xếp",
+            "Thêm một phần tử vào đỉnh ngăn xếp",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Đoạn chương trình sau thể hiện công việc gì?",
+          image: "Ảnh/image089.png",
+          options: [
+            "Trả về phần tử ở đỉnh ngăn xếp nhưng không xóa",
+            "Trả về phần tử ở cuối ngăn xếp nhưng không xóa",
+            "Trả về phần tử ở đỉnh ngăn xếp và xóa",
+            "Trả về phần tử ở cuôi ngăn xếp và xóa",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Thao tác nào thực hiện trả về giá trị của phần tử ở đỉnh ngăn xếp mà không làm thay đổi nội dung ngăn xếp?",
+          options: ["getTop()", "isEmpty()", "pop()", "push()"],
+          correct: 0,
+        },
+        {
+          text: "Hàng đợi còn được gọi là danh sách kiểu:",
+          options: ["FILO", "LIFO", "LOLO", "FIFO"],
+          correct: 3,
+        },
+        {
+          text: "Khi cài đặt ngăn xếp sử dụng kiểu List trong Python với đỉnh ngăn xếp là đuôi danh sách. Để cài đặt phép toán push(x), ta cần gọi đến thao tác nào của kiểu List?",
+          options: ["append(x)", " remove(x)", "insert(x)", "pop(x)"],
+          correct: 0,
+        },
+        {
+          text: "Cho hàng đợi sau được cài đặt trên cơ sở danh sách liên kết. Kết quả của việc thực hiện phép toán enqueue(15) là gì?",
+          image: "Ảnh/image091.png",
+          options: [
+            "Nút có giá trị 15 được thêm vào cuối danh sách",
+            "Nút có giá trị 15 bị xóa khỏi danh sách",
+            "Trả về False vì danh sách không có nút có giá trị 15",
+            "Nút có giá trị 15 được thêm vào đầu danh sách",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Hàng đợi có thể cài đặt bằng cách nào?",
+          options: [
+            "Tất cả đều đúng",
+            "Mảng",
+            "Kiểu List trong Python",
+            "Danh sách liên kết",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Thao tác nào thực hiện lấy một phần tử ra khỏi hàng đợi?",
+          options: ["dequeue()", "delete()", " enqueue()", "pop()"],
+          correct: 0,
+        },
+        {
+          text: "Khi cài đặt hàng đợi bằng mảng vòng lưu trữ được tối đa m phần tử, front và back tương ứng lưu vị trí của phần tử đầu hàng đợi và phần tử cuối hàng đợi. Nếu hàng đợi không rỗng và thực hiện loại bỏ một phần tử khỏi hàng đợi thì các giá trị front và back thay đổi như thế nào?",
+          options: [
+            "front = front + 1; back không thay đổi",
+            "front = (front + 1) % m; back không thay đổi",
+            "front không thay đổi; back = (back + 1) % m",
+            "front không thay đổi; back = back + 1",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Thủ tục sau thực hiện việc gì?",
+          image: "Ảnh/image093.png",
+          options: [
+            "Duyệt cây theo chiều rộng",
+            "Duyệt cây theo thứ tự trước",
+            "Duyệt cây theo thứ tự giữa",
+            "Duyệt cây theo thứ tự sau",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Duyệt cây nhị phân theo thứ tự giữa được thực hiện như thế nào?",
+          options: [
+            "Thăm gốc, duyệt cây con trái theo thứ tự giữa, duyệt cây con phải theo thứ tự giữa.",
+            "Duyệt cây con trái theo thứ tự trước, thăm gốc giữa, duyệt cây con phải theo thứ tự sau.",
+            "Duyệt cây con trái theo thứ tự giữa, thăm gốc, duyệt cây con phải theo thứ tự giữa",
+            "Thăm gốc trước, duyệt cây con con trái theo thứ tự giữa, duyệt cây con phải theo thứ tự sau.",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Nút F trong cây sau ở mức bao nhiêu?",
+          image: "Ảnh/image095.png",
+          options: ["2", "3", "1", "4"],
+          correct: 0,
+        },
+        {
+          text: "Cấp của một nút trên cây là gì?",
+          options: [
+            "Chiều dài đường đi từ nút gốc đến nút đó",
+            "Số nút an hem của nút đó",
+            "Số nút lá trong cây",
+            "Số nút con của nút đó",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Chiều cao của cây là gì?",
+          options: [
+            "Số cây con của cây",
+            "Mức lớn nhất của các nút trên cây",
+            "Số lượng nút của cây",
+            "Cấp lớn nhất của các nút trên cây",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Thủ tục sau thực hiện việc gì?",
+          image: "Ảnh/image097.png",
+          options: [
+            "Duyệt cây theo thứ tự trước",
+            "Duyệt cây theo thứ tự sau",
+            "Duyệt cây theo thứ tự rộng",
+            "Duyệt cây theo thứ tự giữa",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Cho cây nhị phân T, số nút tối đa ở mức 6 (nút gốc có mức 0) là bao nhiêu?",
+          options: ["28", "32", "64", "128"],
+          correct: 2,
+        },
+        {
+          text: "Một cây nhị phân có chiều cao là 6, cây đó chỉ có 50 nút. Nếu lưu trữ kế tiếp thì lãng phí bao nhiêu ô (nút gốc có mức 0, mỗi nút chiếm 1 ô)?",
+          options: ["15 ô", "70 ô", "25 ô", "77 ô"],
+          correct: 3,
+        },
+        {
+          text: "Khi lưu trữ cây nhị phân dưới dạng mảng, nếu nút đầu tiên ở vị trí 0 và vị trí của nút cha trong mảng là 4 thì nút con phải ở vị trí nào trong mảng?",
+          options: ["7", "9", "10", "8"],
+          correct: 2,
+        },
+        {
+          text: "Khi lưu trữ cây nhị phân dưới dạng mảng, nếu nút đầu tiên ở vị trí 0 và vị trí của nút cha trong mảng là i thì nút con trái ở vị trí nào trong mảng?",
+          options: ["i+1", "2*i+1", "2*i", "  i-1"],
+          correct: 1,
+        },
+        {
+          text: "Duyệt cây nhị phân theo thứ tự sau được thực hiện như thế nào?",
+          options: [
+            "Thăm gốc, duyệt cây con trái theo thứ tự sau, duyệt cây con phải theo thứ tự sau.",
+            "Duyệt cây con trái theo thứ tự trước, thăm gốc giữa, duyệt cây con phải theo thứ tự sau.",
+            "Thăm gốc trước, duyệt cây con trái theo thứ tự giữa, duyệt cây con phải theo thứ tự sau.",
+            "Duyệt cây con trái theo thứ tự sau, duyệt cây con phải theo thứ tự sau, thăm gốc.",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Khi lưu trữ cây nhị phân dưới dạng mảng, nếu nút đầu tiên ở vị trí 0 và vị trí của nút cha trong mảng là 3 thì các nút con ở vị trí nào trong mảng ?",
+          options: ["7 và 8", "8 và 9", "5 và 6", "6 và 7"],
+          correct: 0,
+        },
+        {
+          text: "Nút G trong cây sau ở mức bao nhiêu?",
+          image: "Ảnh/image098.png",
+          options: ["2", "3", "1", "4"],
+          correct: 0,
+        },
+        {
+          text: "Trong cấu trúc dữ liệu kiểu cây, nút có cấp bằng 0 gọi là:",
+          options: [
+            "Nút lá",
+            "Nút cuối cùng trong cây",
+            "Nút gốc",
+            "Không có đáp án nào đúng",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Trong các phát biểu sau về cây, phát biểu nào SAI?",
+          options: [
+            "Các thành phần dữ liệu được lưu trong các nút",
+            "Cây không có nút nào gọi là cây rỗng",
+            "Cây có một số nút đặc biệt gọi là gốc",
+            "Các nút có mối quan hệ phân cấp gọi là quan hệ “cha-con”",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Cấp của một nút trên cây là gì ?",
+          options: [
+            "Chiều dài đường đi từ nút gốc đến nút đó",
+            "Số nút con của nút đó",
+            "Số nút lá trong cây",
+            "Số nút anh em của nút đó",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Thủ tục sau thực hiện việc gì?",
+          image: "Ảnh/image100.png",
+          options: [
+            "Duyệt cây theo chiều rộng",
+            "Duyệt cây theo thứ tự trước",
+            "Duyệt cây theo thứ tự giữa",
+            " Duyệt cây theo thứ tự sau",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Kết quả của phép duyệt cây sau theo thứ tự giữa là gì?",
+          image: "Ảnh/image102.png",
+          options: [
+            "B, A, E, C, F, G, H, D, I",
+            "A, B, C, D, E, F, G, H, I",
+            "B, E, F, G, C, H, I, D, A",
+            "A, B, C, E, F, G, D, H, I",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Số lượng tối đa các nút ở mức i trên cây nhị phân là bao nhiêu biết rằng nút gốc ở mức 0?",
+          options: ["2^i + 1", "2^(i-1)", "2^(i+1)", "2^i - 1"],
+          correct: 0,
+        },
+        {
+          text: "Duyệt cây nhị phân theo thứ tự trước được thực hiện như thế nào?",
+          options: [
+            "Thăm gốc trước, duyệt cây con trái theo thứ tự giữa, duyệt cây con phải theo thứ tự sau.",
+            "Duyệt cây con trái theo thứ tự trước, thăm gốc, duyệt cây con phải theo thứ tự sau.",
+            "Duyệt cây con trái theo thứ tự trước, thăm gốc, duyệt cây con phải theo thứ tự trước",
+            "Thăm gốc trước, duyệt cây con con trái theo thứ tự trước, duyệt cây con phải theo thứ tự trước.",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Cây nhị phân đầy đủ là gì?",
+          options: [
+            "Là cây nhị phân mà mỗi nút có 2 con hoặc không có con",
+            "Là cây nhị phân có số nút tối đa ở mọi mức kể cả mức cuối cùng",
+            "Là cây nhị phân có giá trị khóa ở nút cha lớn hơn giá trị khóa ở hai nút con",
+            "Là cây mà ở mọi mức trừ mức cuối đều có số nút là tối đa, riêng ở mức cuối có thiếu thì chỉ thiếu các nút phía bên phải của mức đó",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Trong giải thuật sắp xếp vun đống, ta có 4 thủ tục con (Insert – thêm 1 phần tử vào cây; siftdown – vun đống lại sau khi loại một phần tử khỏi Heap, siftup – vun đống sau khi thêm một phần tử vào cây; Remove – loại 1 phân ftuwr khỏi cây nhị phân ). Để sắp xếp các phần tử trong dãy theo phương pháp vun đống, ta thực hiện 4 thủ tục trên theo thứ tự như thế nào?",
+          options: [
+            "Shiftup – Shiftdown – Remove – Insert",
+            "Insert – Shiftup – Remove – Shiftdown",
+            "Remove – Shiftdown – Insert – Shiftup",
+            "Insert – Shiftup – Shiftdown – Remove",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Trong các giải thuật sắp xếp, giải thuật nào áp dụng phương pháp “Chia để trị”?",
+          options: [
+            "Quick sort, Heap sort",
+            "Merge sort, Insert sort",
+            "Quick sort, Merge sort",
+            "Merge sort, Bubble sort",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Ý tưởng phương pháp sắp xếp vun đống là gì?",
+          options: [
+            "Tạo đống cho cây nhị phân (cây nhị phân đã được sắp xếp giám dần)",
+            "Bắt đầu từ cuối dãy đến đầu dãy, ta lần lượt so sánh hai phần tử kế tiếp nhau, nếu phần tử nào nhỏ hơn được đứng vị trí trên",
+            "Lần lượt tạo đống cho cây nhị phân (phần tử gốc có giá trị lớn nhất) và loại phần tử gốc ra khỏi cây đưa vào dãy sắp xếp",
+            "Lần lượt chia dãy phần tử thành hai dãy con bởi một phần tử khóa (dãy con trước khóa gồm các phần tử nhỏ hơn khóa và dãy còn lại gồm các phần tử lớn hơn khóa)",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Thủ tục sau áp dụng giải thuật sắp xếp nào?",
+          image: "Ảnh/image104.png",
+          options: ["Bubble sort", "Quick sort", "Insert sort", "Merge sort"],
+          correct: 1,
+        },
+        {
+          text: "Thủ tục sau áp dụng giải thuật sắp xếp nào?",
+          image: "Ảnh/image106.png",
+          options: ["Select sort", "Bubble sort", "Insert sort", "Merge sort"],
+          correct: 1,
+        },
+        {
+          text: "Phương pháp sắp xếp nhanh chính còn gọi là phương pháp sắp xếp nào?",
+          options: ["Trộn", "Phân đoạn", "Chèn", "Vun đống"],
+          correct: 1,
+        },
+        {
+          text: "Cho dãy số {4 7 0 9 2 5 3 1 8 6}. Áp dụng phương pháp sắp xếp nổi bọt (Bubble sort ) với việc duyệt từ cuối dãy lên, sau lần lặp đầu tiên của giải thuật ta có kết quả: {0 4 7 1 9 2 5 3 6 8}. Dãy số thu được sau lần lặp thứ hai là dãy nào?",
+          options: [
+            "{0 1 4 7 2 9 3 5 6 8}",
+            "{0 1 2 4 7 3 9 5 6 8}",
+            "{0 4 7 1 9 2 5 3 6 8}",
+            "{0 1 2 3 4 7 5 9 6 8}",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Cho dãy số {6 1 3 0 5 7 9 2 8 4}. Áp dụng phương pháp sắp xếp lựa chọn (Insert sort ) sau hai lần lặp của giải thuật ta có kết quả: {1 3 6 0 5 7 9 2 8 4}. Dãy số thu được sau lần lặp thứ hai là:",
+          options: [
+            "{0 1 3 6 5 7 9 2 8 4}",
+            "{0 1 2 6 5 7 9 3 8 4}",
+            "{0 1 2 6 5 7 9 3 4 8}",
+            "{0 1 2 3 4 5 6 7 8 9}",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Cho dãy số{3 1 6 0 5 4 8 2 9 7}. Áp dụng phương pháp sắp xếp nhanh (Quick sort), kết quả của lần phân đoạn đầu tiên là gì?",
+          options: [
+            "(0 1 2) 3 (4 5 6 7 8 9)",
+            "(0 1 6) 3 (2 4 5 7 8 9)",
+            "(0 1 2) 3 (5 4 8 6 9 7)",
+            "(0 1 6) 3 (5 4 8 2 9 7)",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Cho dãy số: “4 7 0 9 2 5 3 1 8 6” và các bước sắp xếp sau: \nBước 1: 0 4 7 1 9 2 5 3 6 8 \nBước 2: 0 1 4 7 2 9 3 5 6 8 \nBước 3: 0 1 2 4 7 3 9 5 6 8 \nBước 4: 0 1 2 3 4 7 5 9 6 8 \nBước 5: 0 1 2 3 4 5 7 6 9 8 \nBước 6: 0 1 2 3 4 5 6 7 8 9 \nCác bước trên dựa theo giải thuật sắp xếp nào?",
+          options: ["Quick sort", "Bubble sort", "Insert sort", "Select sort"],
+          correct: 1,
+        },
+        {
+          text: "Thủ tục sau áp dụng giải thuật sắp xếp nào?",
+          image: "Ảnh/image108.png",
+          options: ["Bubble sort", "Quick sort", "Insert sort", "Merge sort"],
+          correct: 3,
+        },
+        {
+          text: "Thủ tục sau áp dụng giải thuật sắp xếp nào?",
+          image: "Ảnh/image109.png",
+          options: ["Bubble sort", "Quick sort", "Insert sort", "Merge sort"],
+          correct: 2,
+        },
+        {
+          text: "Khi trích rút khóa 86 khỏi đống nhị phân sau, khóa nào thay thế khóa này ở nút gốc?",
+          image: "Ảnh/image111.png",
+          options: ["9", "14", "82", "45"],
+          correct: 1,
+        },
+        {
+          text: "Sau khi thực hiện phép toán sift-up với khóa 82 trên đống nhị phân sau, khóa này được di chuyển đến vị trí nào ?",
+          image: "Ảnh/image113.png",
+          options: [
+            "Tại nút có khóa 78",
+            "Không thay đổi vị trí",
+            "Tại nút có khóa 86",
+            "Tại nút có khóa 14",
+          ],
+          correct: 0,
+        },
+        {
+          text: "Ý tưởng phương pháp sắp xếp nổi bọt là gì?",
+          options: [
+            "Lần lượt lấy phần tử của danh sách chèn vị trí thích hợp của nó trong dãy bằng cách đẩy các phần tử lớn hơn xuống",
+            "Chọn phần tử bé nhất xếp vào vị trí thứ nhất bằng cách đổi chỗ phần tử bé nhất với phần tử thứ nhất; Tương tự với phần tử nhỏ thứ hai, ba",
+            "Phân đoạn dãy thành nhiều dãy con và lần lượt trộng hai dãy con thành dãy lớn hơn, cho đến khi thu được dãy ban đầu đã được sắp xếp.",
+            "Bắt đầu từ cuối dãy đến đầu dãy, ta lần lượt so sánh hai phần tử kế tiếp nhau, nếu phần tử nào nhỏ hơn được đứng vị trí trên (có thể thực hiện từ đầu đến cuối dãy )",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Cho dãy số {6 1 3 0 5 7 9 2 8 4}. Áp dụng phương pháp sắp xếp lựa chọn (Select sort ) sau hai lần lặp của giải thuật ta có kết quả: {0 1 3 6 5 7 9 2 8 4}. Dãy số thu được sau lần lặp thứ ba là:",
+          options: [
+            "{0 1 3 6 5 7 9 2 8 4}",
+            "{0 1 2 6 5 7 9 3 8 4}",
+            "{0 1 2 6 5 7 9 3 4 8}",
+            "{0 1 2 3 4 5 6 7 8 9}",
+          ],
+          correct: 1,
+        },
+        {
+          text: "Cho dãy số{3 1 6 0 5 4 8 2 9}. Áp dụng phương pháp sắp xếp Trộn (Merge sort), kết quả của lần phân đoạn thứ hai gồm những dãy nào?",
+          options: [
+            "(0 1 3 6)(2 4 5 8 9)",
+            "(3 1 6 0) 3 (5 4 8 2 9)",
+            "(1 3) (0 6) (4 5) (2 8 9)",
+            "(3 1) (6 0) (5 4) (8 2 9)",
+          ],
+          correct: 3,
+        },
+        {
+          text: "Ý tưởng phương pháp sắp Xếp Nhanh là gì?",
+          options: [
+            "Bắt đầu từ cuối dãy đến đầu dãy, ta lần lượt so sánh hai phần tử kế tiếp nhau, nếu phần tử nào nhỏ hơn được đứng vị trí trên",
+            "Chọn phần tử bé nhất xếp vào vị trí thứ nhất bằng cách đổi chỗ phần tử bé nhất với phần tử thứ nhất; Tưởng tự với phần tử nhỏ thứ hai, ba,…",
+            "Lần lượt chia dãy phần tử thành hai dãy con bởi một phần tử khóa ( dãy con trước khóa gồm các phần tử nhỏ hơn khóa và dãy còn lại gồm các phần tử lớn hơn khóa).",
+            "Phân đoạn dãy thành nhiều dãy con và lần lượt trộn hai dãy con thành dãy lớn hơn, cho đến khi thu được dãy ban đầu đã được sắp xếp.",
+          ],
+          correct: 2,
+        },
+        {
+          text: "Cho dãy số: “12 2 8 5 1 6 4 15” và các bước sắp xếp sau: \nBước 1: 1 2 8 5 12 6 4 15 \nBước 2: 1 2 8 5 12 6 4 15 \nBước 3: 1 2 4 5 12 6 8 15 \nBước 4: 1 2 4 5 12 6 8 15 \nBước 5: 1 2 4 5 6 12 8 15 \nBước 6: 1 2 4 5 6 8 12 15 \nCác bước trên dựa theo giải thuật sắp xếp nào?",
+          options: ["Quick sort", "Bubble sort", "Insert sort", "Select sort"],
+          correct: 3,
+        },
+        {
+          text: "Ý tưởng phương pháp sắp xếp Trộn là gì?",
+          options: [
+            "Phân đoạn dãy thành nhiều dãy con cho đến khi các dãy con chỉ còn một phần tử và lần lượt trộn hai dãy con thành dãy lớn hơn, cho đến khi thu được dãy ban đầu đã được sắp xếp",
+            "Lần lượt chia dãy phần tử thành hai dãy con bởi một phần tử khóa (dãy con trước khóa gồm các phần tử nhỏ hơn khóa và dãy còn lại gồm các phần tử lớn hơn khóa)",
+            "Chọn phần tử bé nhất xếp vào vị trí thứ nhất bằng cách đổi chỗ phần tử bé nhất với phần tử thứ nhất; Tương tự đối với phần tử nhỏ thứ hai, ba,…",
+            "Bắt đầu từ cuối dãy đến đầu dãy, ta lần lượt so sánh hai phần tử kế tiếp nhau, nếu phần tử nào nhỏ hơn được đứng vị trí trên",
+          ],
+          correct: 0,
+        },
+      ];
+
+      // ==================== LOGIC CỦA ỨNG DỤNG ====================
+      document.addEventListener("DOMContentLoaded", () => {
+        // DOM Elements
+        const homePage = document.getElementById("homePage");
+        const examPage = document.getElementById("examPage");
+        const startExamBtn = document.getElementById("startExamBtn");
+        const backToHomeBtn = document.getElementById("backToHomeBtn");
+        const questionText = document.getElementById("questionText");
+        const optionsContainer = document.getElementById("optionsContainer");
+        const explanationArea = document.getElementById("explanationArea");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const submitBtnBottom = document.getElementById("submitBtnBottom");
+        const questionGrid = document.getElementById("questionGrid");
+        const answeredCounter = document.getElementById("answeredCounter");
+        const submitExamBtn = document.getElementById("submitExamBtn");
+        const timerDisplay = document.getElementById("timerDisplay");
+        const resultPanel = document.getElementById("resultPanel");
+        const resetExamBtn = document.getElementById("resetExamBtn");
+        const goToHomeBtn = document.getElementById("goToHomeBtn");
+        const goToHistoryBtn = document.getElementById("goToHistoryBtn");
+
+        // State
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let examStartTime;
+        let timerInterval;
+        let isExamFinished = false;
+        const TOTAL_TIME = 120 * 60; // 180 minutes in seconds
+
+        // Functions
+        function startExam() {
+          homePage.style.display = "none";
+          examPage.style.display = "block";
+          isExamFinished = false;
+          userAnswers = new Array(questions.length).fill(null);
+          currentQuestionIndex = 0;
+          examStartTime = new Date();
+
+          displayQuestion(currentQuestionIndex);
+          updateQuestionGrid();
+          startTimer();
+          resultPanel.style.display = "none";
+          submitExamBtn.style.display = "block";
+          submitBtnBottom.style.display = "none";
+        }
+
+        function displayQuestion(index) {
+          if (index < 0 || index >= questions.length) return;
+
+          currentQuestionIndex = index;
+          const question = questions[index];
+
+          let html = `<div class="question-text">Câu ${index + 1}: ${question.text}</div>`;
+          if (question.image) {
+            html += `<img src="${question.image}" alt="Question Image" style="max-width: 100%; border-radius: 8px; margin-bottom: 16px;">`;
+          }
+          questionText.innerHTML = html;
+
+          optionsContainer.innerHTML = "";
+          question.options.forEach((option, i) => {
+            const optionEl = document.createElement("div");
+            optionEl.classList.add("option-item");
+            optionEl.innerHTML = `<span class="option-prefix">${String.fromCharCode(65 + i)}.</span> ${option}`;
+
+            if (userAnswers[index] === i) {
+              optionEl.classList.add("selected");
+            }
+
+            if (isExamFinished) {
+              if (i === question.correct) {
+                optionEl.classList.add("correct-after");
+              } else if (userAnswers[index] === i) {
+                optionEl.classList.add("wrong-after");
+              }
+            } else {
+              optionEl.onclick = () => selectOption(index, i);
+            }
+
+            optionsContainer.appendChild(optionEl);
+          });
+
+          updateNavButtons();
+          updateQuestionGrid();
+          updateExplanation();
+        }
+
+        function selectOption(qIndex, oIndex) {
+          if (isExamFinished) return;
+          userAnswers[qIndex] = oIndex;
+          displayQuestion(qIndex);
+        }
+
+        function updateNavButtons() {
+          prevBtn.disabled = currentQuestionIndex === 0;
+          nextBtn.disabled = currentQuestionIndex === questions.length - 1;
+          submitBtnBottom.style.display =
+            currentQuestionIndex === questions.length - 1 ? "block" : "none";
+        }
+
+        function updateQuestionGrid() {
+          questionGrid.innerHTML = "";
+          for (let i = 0; i < questions.length; i++) {
+            const qNum = document.createElement("div");
+            qNum.classList.add("q-num");
+            qNum.textContent = i + 1;
+            qNum.onclick = () => displayQuestion(i);
+
+            if (i === currentQuestionIndex) qNum.classList.add("current");
+            if (userAnswers[i] !== null) {
+              if (!isExamFinished) {
+                qNum.classList.add("selected");
+              } else {
+                if (userAnswers[i] === questions[i].correct) {
+                  qNum.classList.add("correct");
+                } else {
+                  qNum.classList.add("wrong");
+                }
+              }
+            }
+            questionGrid.appendChild(qNum);
+          }
+          const answeredCount = userAnswers.filter((a) => a !== null).length;
+          answeredCounter.textContent = `${answeredCount}/${questions.length}`;
+        }
+
+        function updateExplanation() {
+          explanationArea.style.display = "none";
+          if (!isExamFinished) return;
+
+          const question = questions[currentQuestionIndex];
+          const userAnswer = userAnswers[currentQuestionIndex];
+
+          if (userAnswer !== null) {
+            explanationArea.style.display = "block";
+            if (userAnswer === question.correct) {
+              explanationArea.className =
+                "explanation-area explanation-correct";
+              explanationArea.innerHTML = `<strong>Chính xác!</strong> ${question.explanation || "Bạn đã trả lời đúng."}`;
+            } else {
+              explanationArea.className = "explanation-area explanation-wrong";
+              const correctOption = String.fromCharCode(65 + question.correct);
+              explanationArea.innerHTML = `<strong>Sai rồi!</strong> Đáp án đúng là <strong>${correctOption}</strong>. ${question.explanation || ""}`;
+            }
+          }
+        }
+
+        function startTimer() {
+          let timeLeft = TOTAL_TIME;
+          timerInterval = setInterval(() => {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+            if (timeLeft <= 0) {
+              clearInterval(timerInterval);
+              submitExam();
+            }
+          }, 1000);
+        }
+
+        function submitExam() {
+          if (!confirm("Bạn có chắc chắn muốn nộp bài không?")) return;
+
+          isExamFinished = true;
+          clearInterval(timerInterval);
+
+          let correctCount = 0;
+          for (let i = 0; i < questions.length; i++) {
+            if (userAnswers[i] === questions[i].correct) {
+              correctCount++;
+            }
+          }
+
+          const score = (correctCount / questions.length) * 100;
+
+          const endTime = new Date();
+          const duration = Math.round((endTime - examStartTime) / 1000);
+          const durationFormatted = `${Math.floor(duration / 60)} phút ${duration % 60} giây`;
+
+          const historyItem = {
+            id: Date.now(),
+            startTimeStr: examStartTime.toLocaleString(),
+            endTimeStr: endTime.toLocaleString(),
+            durationStr: durationFormatted,
+            correctCount: correctCount,
+            totalCount: questions.length,
+            score: score,
+            userAnswers: [...userAnswers], // lưu lại đáp án để xem lại
+          };
+
+          const historyList = JSON.parse(
+            localStorage.getItem("dsaExamHistory") || "[]",
+          );
+          historyList.push(historyItem);
+          localStorage.setItem("dsaExamHistory", JSON.stringify(historyList));
+
+          // Show result panel
+          resultPanel.style.display = "block";
+          document.getElementById("startTimeStr").textContent =
+            historyItem.startTimeStr;
+          document.getElementById("endTimeStr").textContent =
+            historyItem.endTimeStr;
+          document.getElementById("durationStr").textContent =
+            historyItem.durationStr;
+          document.getElementById("scoreDetail").textContent =
+            `${correctCount} / ${questions.length}`;
+          document.getElementById("scorePercent").textContent =
+            `${score.toFixed(2)} / 100.00`;
+
+          submitExamBtn.style.display = "none";
+          submitBtnBottom.style.display = "none";
+
+          displayQuestion(currentQuestionIndex); // Re-render to show correct/wrong answers
+          if (typeof loadHistory === "function") loadHistory(); // Cập nhật danh sách lịch sử
+        }
+
+        function resetExam() {
+          if (
+            confirm(
+              "Bạn có muốn bắt đầu lại bài thi không? Mọi tiến độ sẽ bị mất.",
+            )
+          ) {
+            clearInterval(timerInterval);
+            startExam();
+          }
+        }
+
+        function goHome() {
+          if (
+            isExamFinished ||
+            confirm(
+              "Bạn có muốn thoát khỏi bài thi không? Mọi tiến độ sẽ bị mất.",
+            )
+          ) {
+            clearInterval(timerInterval);
+            homePage.style.display = "block";
+            examPage.style.display = "none";
+            document.querySelector('.tab-btn[data-tab="new-exam"]').click();
+          }
+        }
+
+        function goHistory() {
+          if (
+            isExamFinished ||
+            confirm(
+              "Bạn có muốn thoát khỏi bài thi không? Mọi tiến độ sẽ bị mất.",
+            )
+          ) {
+            clearInterval(timerInterval);
+            homePage.style.display = "block";
+            examPage.style.display = "none";
+            document
+              .querySelector('.tab-btn[data-tab="history-summary"]')
+              .click();
+          }
+        }
+
+        function loadHistory() {
+          const historyList = JSON.parse(
+            localStorage.getItem("dsaExamHistory") || "[]",
+          );
+          const tbody = document.getElementById("historySummaryBody");
+          if (!tbody) return;
+
+          tbody.innerHTML = "";
+
+          if (historyList.length === 0) {
+            tbody.innerHTML =
+              "<tr><td colspan='4' style='text-align:center;'>Chưa có dữ liệu lịch sử</td></tr>";
+            return;
+          }
+
+          // Show newest first
+          historyList
+            .slice()
+            .reverse()
+            .forEach((item, index) => {
+              const tr = document.createElement("tr");
+
+              const realIndex = historyList.length - index;
+              const state = `<span style="color: #22c55e; font-weight: 600;">Đã kết thúc</span><br><span style="font-size: 0.75rem; color: #64748b;">Nộp lúc ${item.endTimeStr || ""}</span>`;
+
+              tr.innerHTML = `
+              <td style="font-weight: 600;">Lần ${realIndex}</td>
+              <td>${state}</td>
+              <td><span style="font-weight: bold; color: #1a4a6f;">${parseFloat(item.score).toFixed(2)}</span></td>
+              <td><a class="review-link" href="#" data-id="${item.id}">Xem lại</a></td>
+            `;
+              tbody.appendChild(tr);
+            });
+
+          // Bind click cho nút xem lại
+          document.querySelectorAll(".review-link").forEach((link) => {
+            link.addEventListener("click", function (e) {
+              e.preventDefault();
+              const id = parseInt(this.getAttribute("data-id"));
+              reviewHistoryItem(id);
+            });
+          });
+        }
+
+        function reviewHistoryItem(id) {
+          const historyList = JSON.parse(
+            localStorage.getItem("dsaExamHistory") || "[]",
+          );
+          const item = historyList.find((i) => i.id === id);
+          if (!item) return;
+
+          clearInterval(timerInterval);
+          homePage.style.display = "none";
+          examPage.style.display = "block";
+
+          isExamFinished = true;
+          userAnswers =
+            item.userAnswers || new Array(questions.length).fill(null);
+          currentQuestionIndex = 0;
+          examStartTime = new Date(item.startTimeStr);
+
+          // Restore result panel
+          resultPanel.style.display = "block";
+          document.getElementById("startTimeStr").textContent =
+            item.startTimeStr || "-";
+          document.getElementById("endTimeStr").textContent =
+            item.endTimeStr || "-";
+          document.getElementById("durationStr").textContent =
+            item.durationStr || "-";
+          document.getElementById("scoreDetail").textContent =
+            `${item.correctCount} / ${item.totalCount || questions.length}`;
+          document.getElementById("scorePercent").textContent =
+            `${parseFloat(item.score).toFixed(2)} / 100.00`;
+
+          submitExamBtn.style.display = "none";
+          submitBtnBottom.style.display = "none";
+
+          displayQuestion(currentQuestionIndex);
+          updateQuestionGrid();
+        }
+
+        // Call once to load initial data
+        loadHistory();
+
+        // Event Listeners
+        startExamBtn.addEventListener("click", startExam);
+        prevBtn.addEventListener("click", () =>
+          displayQuestion(currentQuestionIndex - 1),
+        );
+        nextBtn.addEventListener("click", () =>
+          displayQuestion(currentQuestionIndex + 1),
+        );
+        submitExamBtn.addEventListener("click", submitExam);
+        submitBtnBottom.addEventListener("click", submitExam);
+        if (resetExamBtn) resetExamBtn.addEventListener("click", resetExam); // It may fail if resetExamBtn is not found like line 1456 says. Actually let's just keep original code and append.
+        backToHomeBtn.addEventListener("click", goHome);
+        if (goToHomeBtn) goToHomeBtn.addEventListener("click", goHome);
+        if (goToHistoryBtn) goToHistoryBtn.addEventListener("click", goHistory);
+
+        // Tab functionality
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            tabButtons.forEach((btn) => btn.classList.remove("active"));
+            button.classList.add("active");
+
+            const tab = button.getAttribute("data-tab");
+            tabContents.forEach((content) => {
+              if (content.id === tab + "Tab") {
+                content.classList.add("active");
+              } else {
+                content.classList.remove("active");
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

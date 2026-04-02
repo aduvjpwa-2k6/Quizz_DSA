@@ -533,9 +533,14 @@
         <div class="mock-badge">Thi Thử</div>
         <h1>Hệ thống ôn tập DSA</h1>
         <div class="info-row">
-          <div class="info-item">📄 180 câu hỏi</div>
-          <div class="info-item">⏱️ 120 phút</div>
+          <div class="info-item">📄 <span id="qCountDisplay">30</span> câu/lần</div>
+          <div class="info-item">⏱️ Hỗ trợ ôn luyện</div>
           <div class="info-item">🎯 Chấm điểm</div>
+        </div>
+        <div style="margin: 20px 0;">
+          <label for="questionSetSelect" style="font-weight: 600;">Chọn phần thi (30 câu/phần):</label>
+          <select id="questionSetSelect" style="padding: 10px 16px; border-radius: 20px; border: 1px solid #ccc; font-family: inherit; margin-left: 10px; cursor: pointer; outline: none; font-size: 1rem;">
+          </select>
         </div>
         <button class="start-btn" id="startExamBtn">Bắt đầu ngay →</button>
       </div>
@@ -566,7 +571,7 @@
               <h1>📘 ÔN TẬP & KIỂM TRA</h1>
               <p>Hệ Thống Ôn Tập & Thi • Cấu trúc Dữ liệu & Giải thuật</p>
             </div>
-            <div class="timer" id="timerDisplay">120:00</div>
+            <div class="timer" id="timerDisplay">30:00</div>
           </div>
 
           <div id="resultPanel" class="result-panel">
@@ -682,7 +687,7 @@
       
       // ==================== DỮ LIỆU CÂU HỎI (168 câu) ====================
       // (Đã giữ nguyên 10 câu đầu + 158 câu bạn cung cấp, đủ 168 câu)
-      const questions = [
+      const allQuestions = [
         {
           text: "Cho T(n) = 2n² + n + 3 thì T(n) có độ phức tạp tính toán như thế nào?",
           options: [
@@ -2303,17 +2308,44 @@
         const resetExamBtn = document.getElementById("resetExamBtn");
         const goToHomeBtn = document.getElementById("goToHomeBtn");
         const goToHistoryBtn = document.getElementById("goToHistoryBtn");
+        const questionSetSelect = document.getElementById("questionSetSelect");
+        const qCountDisplay = document.getElementById("qCountDisplay");
 
+        // Prepare chunks
+        const chunkSize = 30;
+        const totalChunks = Math.ceil(allQuestions.length / chunkSize);
+        for (let i = 0; i < totalChunks; i++) {
+          const start = i * chunkSize + 1;
+          const end = Math.min((i + 1) * chunkSize, allQuestions.length);
+          const option = document.createElement("option");
+          option.value = i;
+          option.textContent = `Phần ${i + 1} (Câu ${start} - ${end})`;
+          questionSetSelect.appendChild(option);
+        }
+        
+        questionSetSelect.addEventListener("change", () => {
+          const chunkIndex = parseInt(questionSetSelect.value);
+          const end = Math.min((chunkIndex + 1) * chunkSize, allQuestions.length);
+          const start = chunkIndex * chunkSize + 1;
+          qCountDisplay.textContent = end - start + 1;
+        });
+        
+        
         // State
+        let questions = [];
         let currentQuestionIndex = 0;
         let userAnswers = [];
         let examStartTime;
         let timerInterval;
         let isExamFinished = false;
-        const TOTAL_TIME = 120 * 60; // 180 minutes in seconds
+        const TOTAL_TIME = 30 * 60; // 30 minutes in seconds / 1 min per question
 
         // Functions
         function startExam() {
+          const chunkIndex = parseInt(questionSetSelect.value) || 0;
+          const start = chunkIndex * chunkSize;
+          const end = start + chunkSize;
+          questions = allQuestions.slice(start, end);
           homePage.style.display = "none";
           examPage.style.display = "block";
           isExamFinished = false;

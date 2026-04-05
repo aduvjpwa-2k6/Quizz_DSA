@@ -2725,7 +2725,6 @@
         // Tab functionality
         const tabButtons = document.querySelectorAll(".tab-btn");
         const tabContents = homePage.querySelectorAll(".tab-content");
-
         tabButtons.forEach((button) => {
           button.addEventListener("click", () => {
             tabButtons.forEach((btn) => btn.classList.remove("active"));
@@ -2741,20 +2740,20 @@
             });
           });
         });
-      });
 
-      // Keyboard navigation navigation
-      document.addEventListener("keydown", (e) => {
-        if (examPage.style.display !== "none") {
-          if (e.key === "ArrowLeft" && currentQuestionIndex > 0) {
-            displayQuestion(currentQuestionIndex - 1);
-          } else if (
-            e.key === "ArrowRight" &&
-            currentQuestionIndex < questions.length - 1
-          ) {
-            displayQuestion(currentQuestionIndex + 1);
+        // Keyboard navigation navigation
+        document.addEventListener("keydown", (e) => {
+          if (examPage.style.display !== "none") {
+            if (e.key === "ArrowLeft" && currentQuestionIndex > 0) {
+              displayQuestion(currentQuestionIndex - 1);
+            } else if (
+              e.key === "ArrowRight" &&
+              currentQuestionIndex < questions.length - 1
+            ) {
+              displayQuestion(currentQuestionIndex + 1);
+            }
           }
-        }
+        });
       });
     </script>
   </body>

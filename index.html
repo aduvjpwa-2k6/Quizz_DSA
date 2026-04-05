@@ -2744,18 +2744,18 @@
       });
 
       // Keyboard navigation navigation
-        document.addEventListener("keydown", (e) => {
-          if (examPage.style.display !== "none") {
-            if (e.key === "ArrowLeft" && currentQuestionIndex > 0) {
-              displayQuestion(currentQuestionIndex - 1);
-            } else if (
-              e.key === "ArrowRight" &&
-              currentQuestionIndex < questions.length - 1
-            ) {
-              displayQuestion(currentQuestionIndex + 1);
-            }
+      document.addEventListener("keydown", (e) => {
+        if (examPage.style.display !== "none") {
+          if (e.key === "ArrowLeft" && currentQuestionIndex > 0) {
+            displayQuestion(currentQuestionIndex - 1);
+          } else if (
+            e.key === "ArrowRight" &&
+            currentQuestionIndex < questions.length - 1
+          ) {
+            displayQuestion(currentQuestionIndex + 1);
           }
-        });
+        }
+      });
     </script>
   </body>
 </html>

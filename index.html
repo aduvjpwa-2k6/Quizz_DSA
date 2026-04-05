@@ -2670,7 +2670,7 @@
           clearInterval(timerInterval);
           homePage.style.display = "none";
           examPage.style.display = "block";
-
+          questions = allQuestions.slice();
           isExamFinished = true;
           userAnswers =
             item.userAnswers || new Array(questions.length).fill(null);
@@ -2717,7 +2717,7 @@
 
         // Tab functionality
         const tabButtons = document.querySelectorAll(".tab-btn");
-        const tabContents = document.querySelectorAll(".tab-content");
+        const tabContents = homePage.querySelectorAll(".tab-content");
 
         tabButtons.forEach((button) => {
           button.addEventListener("click", () => {

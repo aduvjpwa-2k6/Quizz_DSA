@@ -275,7 +275,10 @@
       .nav-btn:hover {
         background: #f1f5f9;
       }
-
+      .nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
       .question-grid {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
@@ -460,6 +463,10 @@
       }
       body.dark-mode .nav-btn:hover {
         background: #475569;
+      }
+      body.dark-mode .nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
       body.dark-mode .q-num {
         background: #334155;
@@ -2735,6 +2742,20 @@
           });
         });
       });
+
+      // Keyboard navigation navigation
+        document.addEventListener("keydown", (e) => {
+          if (examPage.style.display !== "none") {
+            if (e.key === "ArrowLeft" && currentQuestionIndex > 0) {
+              displayQuestion(currentQuestionIndex - 1);
+            } else if (
+              e.key === "ArrowRight" &&
+              currentQuestionIndex < questions.length - 1
+            ) {
+              displayQuestion(currentQuestionIndex + 1);
+            }
+          }
+        });
     </script>
   </body>
 </html>

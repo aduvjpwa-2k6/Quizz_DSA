@@ -2317,6 +2317,12 @@
         // Prepare chunks
         const chunkSize = 30;
         const totalChunks = Math.ceil(allQuestions.length / chunkSize);
+        
+        const allOption = document.createElement("option");
+        allOption.value = "all";
+        allOption.textContent = `Tất cả (${allQuestions.length} câu)`;
+        questionSetSelect.appendChild(allOption);
+        
         for (let i = 0; i < totalChunks; i++) {
           const start = i * chunkSize + 1;
           const end = Math.min((i + 1) * chunkSize, allQuestions.length);
@@ -2325,14 +2331,25 @@
           option.textContent = `Phần ${i + 1} (Câu ${start} - ${end})`;
           questionSetSelect.appendChild(option);
         }
-        
+
         questionSetSelect.addEventListener("change", () => {
-          const chunkIndex = parseInt(questionSetSelect.value);
-          const end = Math.min((chunkIndex + 1) * chunkSize, allQuestions.length);
-          const start = chunkIndex * chunkSize + 1;
-          qCountDisplay.textContent = end - start + 1;
+          if (questionSetSelect.value === "all") {
+            qCountDisplay.textContent = allQuestions.length;
+          } else {
+            const chunkIndex = parseInt(questionSetSelect.value);
+            const end = Math.min(
+              (chunkIndex + 1) * chunkSize,
+              allQuestions.length,
+            );
+            const start = chunkIndex * chunkSize + 1;
+            qCountDisplay.textContent = end - start + 1;
+          }
         });
         
+
+        // Trigger change to set correct initial count
+        questionSetSelect.value = "0"; // Default to "Phần 1"
+        questionSetSelect.dispatchEvent(new Event("change"));
         
         // State
         let questions = [];
@@ -2345,10 +2362,17 @@
 
         // Functions
         function startExam() {
-          const chunkIndex = parseInt(questionSetSelect.value) || 0;
-          const start = chunkIndex * chunkSize;
-          const end = start + chunkSize;
-          questions = allQuestions.slice(start, end);
+          if (questionSetSelect.value === "all") {
+            questions = allQuestions.slice();
+          } else {
+            const chunkIndex = parseInt(questionSetSelect.value) || 0;
+            const start = chunkIndex * chunkSize;
+            const end = start + chunkSize;
+            questions = allQuestions.slice(start, end);
+          }
+          
+          TOTAL_TIME = questions.length * 60; // 1 min per question
+          
           homePage.style.display = "none";
           examPage.style.display = "block";
           isExamFinished = false;

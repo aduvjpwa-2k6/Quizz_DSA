@@ -382,7 +382,7 @@
         cursor: pointer;
         text-decoration: none;
       }
-      
+
       /* Dark mode */
       .theme-switch {
         position: fixed;
@@ -456,7 +456,7 @@
       body.dark-mode .nav-btn {
         background: #334155;
         border-color: #475569;
-        color: #f1f5f9;
+        color: #f8fafc;
       }
       body.dark-mode .nav-btn:hover {
         background: #475569;
@@ -511,7 +511,6 @@
       body.dark-mode .tabs {
         border-bottom-color: #475569;
       }
-      
       @media (max-width: 850px) {
         .exam-container {
           flex-direction: column;
@@ -523,9 +522,14 @@
     </style>
   </head>
   <body>
-    
-    <button class="theme-switch" id="themeSwitch" title="Chuyển chế độ Sáng/Tối">🌙</button>
-    
+    <button
+      class="theme-switch"
+      id="themeSwitch"
+      title="Chuyển chế độ Sáng/Tối"
+    >
+      🌙
+    </button>
+
     <div id="homePage" class="home-container">
       <div class="tabs" style="justify-content: center; margin-bottom: 24px">
         <button class="tab-btn active" data-tab="new-exam">Thi mới</button>
@@ -536,14 +540,29 @@
         <div class="mock-badge">Thi Thử</div>
         <h1>Hệ thống ôn tập DSA</h1>
         <div class="info-row">
-          <div class="info-item">📄 <span id="qCountDisplay">30</span> câu/lần</div>
+          <div class="info-item">
+            📄 <span id="qCountDisplay">30</span> câu/lần
+          </div>
           <div class="info-item">⏱️ Hỗ trợ ôn luyện</div>
           <div class="info-item">🎯 Chấm điểm</div>
         </div>
-        <div style="margin: 20px 0;">
-          <label for="questionSetSelect" style="font-weight: 600;">Chọn phần thi (30 câu/phần):</label>
-          <select id="questionSetSelect" style="padding: 10px 16px; border-radius: 20px; border: 1px solid #ccc; font-family: inherit; margin-left: 10px; cursor: pointer; outline: none; font-size: 1rem;">
-          </select>
+        <div style="margin: 20px 0">
+          <label for="questionSetSelect" style="font-weight: 600"
+            >Chọn phần thi:</label
+          >
+          <select
+            id="questionSetSelect"
+            style="
+              padding: 10px 16px;
+              border-radius: 20px;
+              border: 1px solid #ccc;
+              font-family: inherit;
+              margin-left: 10px;
+              cursor: pointer;
+              outline: none;
+              font-size: 1rem;
+            "
+          ></select>
         </div>
         <button class="start-btn" id="startExamBtn">Bắt đầu ngay →</button>
       </div>
@@ -687,9 +706,8 @@
           themeSwitch.textContent = "🌙";
         }
       });
-      
-      // ==================== DỮ LIỆU CÂU HỎI (168 câu) ====================
-      // (Đã giữ nguyên 10 câu đầu + 158 câu bạn cung cấp, đủ 168 câu)
+
+      // ==================== DỮ LIỆU CÂU HỎI ====================
       const allQuestions = [
         {
           text: "Cho T(n) = 2n² + n + 3 thì T(n) có độ phức tạp tính toán như thế nào?",
@@ -792,7 +810,7 @@
         },
         {
           text: "Để thêm phần tử 15 vào vị trí thứ 2 trong danh sách, các thao tác cần thực hiện là gì?",
-          image: "image020.png",
+          image: "Ảnh/image020.png",
           options: [
             "Các phần tử ở vị trí thứ 3 trở về sau dịch sang phải một vị trí và gán giá trị phần tử ở vị trí thứ 2 là 15",
             "Các phần tử ở vị trí thứ 2 trở về sau dịch sang phải một vị trí và gán giá trị phần tử ở vị trí thứ 2 là 15",
@@ -1527,7 +1545,7 @@
             "LILO (last in last out)",
             "FIFO (first int first out)",
           ],
-          correct: 0,
+          correct: 2,
         },
         {
           text: "Để xóa nút có giá trị 27 ta cần biết địa chỉ của nút nào",
@@ -2345,12 +2363,11 @@
             qCountDisplay.textContent = end - start + 1;
           }
         });
-        
 
         // Trigger change to set correct initial count
         questionSetSelect.value = "0"; // Default to "Phần 1"
         questionSetSelect.dispatchEvent(new Event("change"));
-        
+
         // State
         let questions = [];
         let currentQuestionIndex = 0;
@@ -2358,7 +2375,7 @@
         let examStartTime;
         let timerInterval;
         let isExamFinished = false;
-        const TOTAL_TIME = 30 * 60; // 30 minutes in seconds / 1 min per question
+        let TOTAL_TIME = 30 * 60; // 30 minutes in seconds / 1 min per question
 
         // Functions
         function startExam() {
@@ -2372,7 +2389,7 @@
           }
           
           TOTAL_TIME = questions.length * 60; // 1 min per question
-          
+
           homePage.style.display = "none";
           examPage.style.display = "block";
           isExamFinished = false;

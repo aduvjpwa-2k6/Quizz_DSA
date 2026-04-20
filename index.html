@@ -422,10 +422,13 @@
         color: #cbd5e1;
       }
       body.dark-mode .history-table tbody tr:hover {
-        background-color: #1b234a;
+        background-color: #334155;
       }
       body.dark-mode .history-table td {
         border-bottom: 1px solid #334155;
+      }
+       body.dark-mode .history-table .review-link {
+        color: #60a5fa;
       }
       body.dark-mode .home-container h1,
       body.dark-mode .result-panel td:first-child {
@@ -497,7 +500,10 @@
         background: #475569;
       }
       body.dark-mode .history-item .score {
-        color: #60a5fa;
+        color: inherit;
+      }
+      body.dark-mode .history-score {
+        color: #f8fafc !important;
       }
       body.dark-mode .wrong-item a {
         color: #60a5fa;
@@ -2651,7 +2657,7 @@
               tr.innerHTML = `
               <td style="font-weight: 600;">Lần ${realIndex}</td>
               <td>${state}</td>
-              <td><span style="font-weight: bold; color: #1a4a6f;">${parseFloat(item.score).toFixed(2)}</span></td>
+              <td><span class="history-score" style="font-weight: bold; color: inherit;">${parseFloat(item.score).toFixed(2)}</span></td>
               <td><a class="review-link" href="#" data-id="${item.id}">Xem lại</a></td>
             `;
               tbody.appendChild(tr);
